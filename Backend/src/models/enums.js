@@ -1,5 +1,5 @@
 export default {
-  RoleEnum: ['admin', 'customer','user'],
+  RoleEnum: ['admin', 'customer'],
   StatusEnum: ['pending', 'denied', 'accepted'],
   TicketTypeEnum: ['regular', 'vip'],
   PaymentMethodEnum: ['ABA Pay', 'Credit Card', 'Pi Pay', 'Alipay'],

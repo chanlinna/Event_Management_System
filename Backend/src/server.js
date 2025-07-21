@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { serveSwagger, setupSwagger } from './config/swagger.js';
 import loginRoute from './routes/loginRoute.js';
 import venueRoute from './routes/venueRoute.js';
+import userRoute from './routes/userRoute.js';
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use('/docs', serveSwagger, setupSwagger);
 
 app.use('/auth', loginRoute);
 app.use('/api/admin/venues', venueRoute);
+app.use('/users', userRoute);
 
 
 
