@@ -4,11 +4,13 @@ import { serveSwagger, setupSwagger } from './config/swagger.js';
 import loginRoute from './routes/loginRoute.js';
 import venueRoute from './routes/venueRoute.js';
 import userRoute from './routes/userRoute.js';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/docs', serveSwagger, setupSwagger);
