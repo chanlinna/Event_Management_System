@@ -1,0 +1,34 @@
+/* src/components/CateringCard/CateringCard.css */
+
+.catering-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 320px; /* Fixed width for the card */
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.catering-card:hover {
+    transform: translateY(-5px); /* Little lift on hover */
+}
+
+.catering-card-image {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures image covers the area without distortion */
+}
+
+.catering-card-title {
+    font-size: 1.5em;
+    color: #333;
+    margin: 15px 20px 10px;
+}
+
+.catering-card-description {
+    font-size: 1em;
+    color: #666;
+    margin: 0 20px 20px;
+    line-height: 1.5;
+}

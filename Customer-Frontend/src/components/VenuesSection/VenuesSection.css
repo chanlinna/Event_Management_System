@@ -1,0 +1,18 @@
+.venues-section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.venues-section h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.venue-cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
