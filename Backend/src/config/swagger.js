@@ -9,6 +9,15 @@ const options = {
             version: '1.0.0',
             description: 'API for admin managing events, users, catering, and more.',
         },
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
     },
     apis: ['**/controllers/*.js'],
 };
