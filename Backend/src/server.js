@@ -14,7 +14,7 @@ app.use(express.json());
 app.use('/docs', serveSwagger, setupSwagger);
 
 app.use('/auth', loginRoute);
-app.use('/api/admin/venues', venueRoute);
+app.use('/admin/venues', venueRoute);
 app.use('/users', userRoute);
 
 

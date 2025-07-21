@@ -34,31 +34,36 @@ import jwt from 'jsonwebtoken';
  *         description: Course created
  */
 export const register = async (req, res) => {
-    const { email, password, username } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!username) {
-        return res.status(400).json({ error: 'Username is required' });
+    if (!username || !email || !password) {
+        return res.status(400).json({message: 'All fields are requires'});
     }
 
     try {
-        const exists = await db.User.findOne({ where: { email } });
-        if (exists) return res.status(400).json({ error: 'Email already registered' });
-
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const existingUser = await db.User.findOne({where: {email} });
+        if(existingUser) {
+            return res.status(400).json({message: 'Email already in use'});
+        }
 
         const user = await db.User.create({
-            email,
-            password: hashedPassword,
             username,
-            role: 'admin' // assuming you're creating an admin
+            email,
+            password
         });
 
         res.status(201).json({
-            message: 'Admin registered',
-            user: { id: user.id, email: user.email, username: user.username, role: user.role }
+            message: 'User registered successfully',
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                role: 'admin'
+            },
         });
-    } catch (err) {
-        res.status(500).json({ error: 'Registration error', details: err.message });
+    }
+    catch(err) {
+        res.status(500).json({error: err.message });
     }
 };
 
@@ -90,7 +95,7 @@ export const register = async (req, res) => {
  *       404:
  *         description: User not found
  */
-export const login = async(req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -104,13 +109,11 @@ export const login = async(req, res) => {
             expiresIn: '1d',
         });
 
-        res.json({ token, user: { id: user.id, email: user.email} });
+        res.json({ token, user: { id: user.id, email: user.email } });
     } catch (err) {
         res.status(500).json({ error: 'Login error', details: err.message });
     }
 };
-
-
 
 /**
  * @swagger
@@ -129,22 +132,19 @@ export const login = async(req, res) => {
  *         description: Forbidden (not admin)
  */
 
-export const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader?.split(' ')[1];
 
-  if (!token) return res.status(401).json({ error: 'Token missing' });
+export const adminAuthenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader?.split(' ')[1];
 
-  try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    if (user.role !== 'admin') return res.status(403).json({ error: 'Access denied' });
+    if (!token) return res.status(401).json({ error: 'Token missing' });
 
-    req.user = user;
-    next();
-  } catch {
-    res.status(403).json({ error: 'Invalid or expired token' });
-  }
+    try {
+        const user = jwt.verify(token, process.env.JWT_SECRET);
+        if (user.role !== 'admin') return res.status(403).json({ error: 'Access denied' });
+        req.user = user;
+        next();
+    } catch {
+        res.status(403).json({ error: 'Invalid or expired token' });
+    }
 };
-
-
-

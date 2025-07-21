@@ -2,7 +2,7 @@ import express from 'express';
 import {
     register,
     login,
-    authenticateToken
+    adminAuthenticateToken
 
 } from '../controllers/loginController.js';
 
@@ -11,6 +11,6 @@ const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/user', authenticateToken);
+router.get('/admin', adminAuthenticateToken);
 
 export default router;
