@@ -23,11 +23,11 @@ export default (sequelize, DataTypes) =>
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users',
+        model: 'users',
         key: 'userId'
       }
     }
   }, {
     timestamps: false,
-    tableName: 'Customers'
+    tableName: 'customers'
   });

@@ -17,6 +17,6 @@ app.use('/api/admin/venues', venueRoute);
 
 
 
-app.get('/', (req, res) => res.send('Welcome to School API!'));
+app.get('/', (req, res) => res.send('Welcome to EventNa Management system API!'));
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
