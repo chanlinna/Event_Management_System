@@ -13,5 +13,5 @@ export default (sequelize, DataTypes) =>
     },
     {
         timestamps: false,
-        tableName: 'Users'
+        tableName: 'users'
     });

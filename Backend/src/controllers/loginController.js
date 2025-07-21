@@ -11,6 +11,59 @@ import jwt from 'jsonwebtoken';
 
 /**
  * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Create a new admin user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password, username]
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Course created
+ */
+export const register = async (req, res) => {
+    const { email, password, username } = req.body;
+
+    if (!username) {
+        return res.status(400).json({ error: 'Username is required' });
+    }
+
+    try {
+        const exists = await db.User.findOne({ where: { email } });
+        if (exists) return res.status(400).json({ error: 'Email already registered' });
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await db.User.create({
+            email,
+            password: hashedPassword,
+            username,
+            role: 'admin' // assuming you're creating an admin
+        });
+
+        res.status(201).json({
+            message: 'Admin registered',
+            user: { id: user.id, email: user.email, username: user.username, role: user.role }
+        });
+    } catch (err) {
+        res.status(500).json({ error: 'Registration error', details: err.message });
+    }
+};
+
+/**
+ * @swagger
  * /auth/login:
  *   post:
  *     summary: Login as admin
@@ -56,6 +109,7 @@ export const login = async(req, res) => {
         res.status(500).json({ error: 'Login error', details: err.message });
     }
 };
+
 
 
 /**

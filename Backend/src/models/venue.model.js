@@ -8,5 +8,5 @@ export default (sequelize, DataTypes) =>
         phone: { type: DataTypes.STRING(25), allowNull: false },
     }, {
         timestamps: false,
-        tableName: 'Venues'
+        tableName: 'venues'
     });
