@@ -1,16 +1,18 @@
 import db from '../models/index.js';
 
+
 /**
  * @swagger
- * /api/admin/venues:
- *   get:
- *     summary: List all venues
- *     tags: [Venues]
- *     responses:
- *       200:
- *         description: List of venues
+ * tags:
+ *   - name: Venues
+ *     description: Venue management
+ */
+
+/**
+ * @swagger
+ * /venues:
  *   post:
- *     summary: Add a new venue
+ *     summary: Create a new venue
  *     tags: [Venues]
  *     requestBody:
  *       required: true
@@ -18,54 +20,168 @@ import db from '../models/index.js';
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, location, capacity, availability]
+ *             required: [name, location, max_occupancy, phone]
  *             properties:
  *               name:
  *                 type: string
  *               location:
  *                 type: string
- *               capacity:
+ *               max_occupancy:
  *                 type: integer
- *               availability:
+ *               phone:
  *                 type: string
- *               image:
+ *               email:
  *                 type: string
- *                 format: binary
  *     responses:
  *       201:
- *         description: Venue created successfully
+ *         description: Venue created
  */
+export const createVenue = async (req, res) => {
+    try {
+        const venue = await db.Venue.create(req.body);
+        res.status(201).json(venue);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
 /**
  * @swagger
- * /api/admin/venues/{id}:
- *   put:
- *     summary: Edit a venue
+ * /venues:
+ *   get:
+ *     summary: Get all venues
+ *     tags: [Venues]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 10 }
+ *         description: Number of items per page
+ *       - in: query
+ *         name: sortby
+ *         schema:
+ *           type: string
+ *           enum: [name, location, max_occupancy]
+ *         description: Sort by field (prefix with 'Desc' for descending)
+ *     responses:
+ *       200:
+ *         description: List of caterings
+ */
+
+export const getAllVenues = async (req, res) => {
+
+    // take certain amount at a time
+    const limit = parseInt(req.query.limit) || 10;
+    // which page to take
+    const page = parseInt(req.query.page) || 1;
+
+    const total = await db.Venue.count();
+
+    //sorting
+    let sortby = req.query.sortby || 'max_occupancy';
+    let sortField = sortby;
+    let sortOrder = 'ASC';
+
+
+    try {
+        const venues = await db.Venue.findAll(
+            {
+                limit: limit, 
+                offset: (page - 1) * limit, 
+                order: [[sortField, sortOrder]]
+            }
+        );
+        res.json({
+            meta: {
+                totalItems: total,
+                page: page,
+                totalPages: Math.ceil(total / limit),
+            },
+            data: venues,
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+/**
+ * @swagger
+ * /venues/{id}:
+ *   get:
+ *     summary: Get a venue by ID
  *     tags: [Venues]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         schema: { type: integer }
+ *       - in: query
+ *         name: populate
  *         schema:
- *           type: integer
+ *           type: string
+ *           example: events
+ *         description: Include related models (e.g., events)
+ *     responses:
+ *       200:
+ *         description: Venue found
+ *       404:
+ *         description: Not found
+ */
+export const getVenueById = async (req, res) => {
+
+    const populate = req.query.populate?.toLowerCase().split(',').map(p => p.trim()) || [];
+    const include = [];
+
+    if (populate.includes('event') || populate.includes('events')) {
+        include.push(db.Event);
+    }
+
+    try {
+        const venue = await db.Venue.findByPk(req.params.id, { include});
+        if (!venue) return res.status(404).json({ message: 'Not found' });
+        res.json(venue);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+/**
+ * @swagger
+ * /venues/{id}:
+ *   put:
+ *     summary: Update a venue
+ *     tags: [Venues]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               location:
- *                 type: string
- *               capacity:
- *                 type: integer
- *               availability:
- *                 type: string
+ *           schema: { type: object }
  *     responses:
  *       200:
- *         description: Venue updated successfully
+ *         description: Venue updated
+ */
+export const updateVenue = async (req, res) => {
+    try {
+        const venue = await db.Venue.findByPk(req.params.id);
+        if (!venue) return res.status(404).json({ message: 'Not found' });
+        await venue.update(req.body);
+        res.json(venue);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+/**
+ * @swagger
+ * /venues/{id}:
  *   delete:
  *     summary: Delete a venue
  *     tags: [Venues]
@@ -73,62 +189,18 @@ import db from '../models/index.js';
  *       - in: path
  *         name: id
  *         required: true
- *         schema:
- *           type: integer
+ *         schema: { type: integer }
  *     responses:
- *       204:
- *         description: Venue deleted successfully
+ *       200:
+ *         description: Venue deleted
  */
-
-
-const venueController = {
-  async getAllVenues(req, res) {
+export const deleteVenue = async (req, res) => {
     try {
-      const venues = await db.venueModel.findAll();
-      res.status(200).json(venues);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch venues' });
+        const venue = await db.Venue.findByPk(req.params.id);
+        if (!venue) return res.status(404).json({ message: 'Not found' });
+        await venue.destroy();
+        res.json({ message: 'Deleted' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-  },
-
-  async createVenue(req, res) {
-    try {
-      const { name, location, capacity, availability, image } = req.body;
-      const newVenue = await db.venueModel.create({ name, location, capacity, availability, image });
-      res.status(201).json(newVenue);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to create venue' });
-    }
-  },
-
-  async updateVenue(req, res) {
-    try {
-      const { id } = req.params;
-      const { name, location, capacity, availability } = req.body;
-      const venue = await db.venueModel.findByPk(id);
-
-      if (!venue) return res.status(404).json({ error: 'Venue not found' });
-
-      await venue.update({ name, location, capacity, availability });
-      res.status(200).json(venue);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to update venue' });
-    }
-  },
-
-  async deleteVenue(req, res) {
-    try {
-      const { id } = req.params;
-      const venue = await db.venueModel.findByPk(id);
-
-      if (!venue) return res.status(404).json({ error: 'Venue not found' });
-
-      await venue.destroy();
-      res.status(204).send();
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to delete venue' });
-    }
-  }
 };
-
-export default venueController;

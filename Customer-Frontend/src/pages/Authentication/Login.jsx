@@ -47,7 +47,7 @@ const Login = () => {
       navigate(location.state?.from?.pathname || '/', { replace: true });
       
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Login failed. Please try again.');
+      setError('Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -60,7 +60,7 @@ const Login = () => {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+         {/*} <label htmlFor="email">Email</label>*/}
           <input
             id="email"
             type="email"
@@ -74,7 +74,7 @@ const Login = () => {
         </div>
         
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          {/*<label htmlFor="password">Password</label>*/}
           <div className="password-input-container">
             <input
               id="password"

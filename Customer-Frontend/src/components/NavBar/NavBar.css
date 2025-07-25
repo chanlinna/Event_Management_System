@@ -41,10 +41,11 @@
 .logout-btn {
   background: none;
   border: none;
-  color: inherit;
+  color: white;
   cursor: pointer;
   font: inherit;
-  padding: 0;
+  padding: 5px 15px;
+  background-color: #5D8191;
 }
 
 .logout-btn:hover {
