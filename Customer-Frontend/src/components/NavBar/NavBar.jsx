@@ -13,7 +13,7 @@ function NavBar() {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">EventEase</div>
+      <div className="navbar-brand">EventNa</div>
       <ul className="navbar-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#venues-catering">Venues & Catering</a></li>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './HeroSection.css';
-import heroImage from '../../assets/hero-image.jpeg'; // Path to image in assets folder
+import heroImage from '../../assets/Hero-Actions.png'; // Path to image in assets folder
 
 function HeroSection() {
     // Inline style to use the imported image directly as background
@@ -10,7 +10,7 @@ function HeroSection() {
 
     return (
         <section className="hero-section" style={heroStyle}>
-            <h1 className="hero-title">Make Your Event Unforgettable with EventEase</h1>
+            <h1 className="hero-title">Make Your Event Unforgettable with EventNA</h1>
         </section>
     );
 }

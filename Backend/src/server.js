@@ -4,6 +4,7 @@ import { serveSwagger, setupSwagger } from './config/swagger.js';
 import loginRoute from './routes/loginRoute.js';
 import venueRoute from './routes/venueRoute.js';
 import userRoute from './routes/userRoute.js';
+import cateringRoute from './routes/cateringRoute.js';
 import cors from 'cors';
 
 dotenv.config();
@@ -16,9 +17,9 @@ app.use(express.json());
 app.use('/docs', serveSwagger, setupSwagger);
 
 app.use('/auth', loginRoute);
-app.use('/api/admin/venues', venueRoute);
+app.use('/venues', venueRoute);
 app.use('/users', userRoute);
-
+app.use('/caterings', cateringRoute);
 
 
 app.get('/', (req, res) => res.send('Welcome to EventNa Management system API!'));
