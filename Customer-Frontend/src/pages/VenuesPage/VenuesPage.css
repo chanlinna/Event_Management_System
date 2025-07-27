@@ -1,0 +1,27 @@
+/* Customer-Frontend/src/pages/HomePage/HomePage.module.css (for reference, not to be changed) */
+/* .section-header { max-width: 1200px; margin: 0 auto 2rem; padding: 0 1rem; } */
+/* .our-services-section { padding: 4rem 1rem; } */
+/* .home-venues-section { padding: 4rem 1rem; } */
+
+/* --- Actual changes for VenuesPage.module.css --- */
+
+.venues-page {
+    display: flex;
+    flex-direction: column;
+    /* This outer container can remain full width or have minimal padding */
+    /* No max-width or margin:auto here, as the inner wrapper will handle it */
+}
+
+.venues-page-content-wrapper { /* <--- NEW CLASS */
+    max-width: 1200px; /* <--- Match your HomePage's .section-header max-width */
+    margin: 0 auto;    /* <--- Center the content */
+    /* This wrapper itself doesn't need horizontal padding, its children will have it. */
+}
+
+/* Responsive adjustments for the wrapper */
+@media (max-width: 768px) {
+    .venues-page-content-wrapper {
+        /* On smaller screens, allow it to be full width, but children will have padding */
+        max-width: 100%;
+    }
+}
