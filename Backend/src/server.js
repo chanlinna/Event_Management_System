@@ -6,6 +6,7 @@ import venueRoute from './routes/venueRoute.js';
 import userRoute from './routes/userRoute.js';
 import cateringRoute from './routes/cateringRoute.js';
 import cors from 'cors';
+import db from './models/index.js';
 
 dotenv.config();
 const app = express();
@@ -24,4 +25,13 @@ app.use('/caterings', cateringRoute);
 
 app.get('/', (req, res) => res.send('Welcome to EventNa Management system API!'));
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+db.sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Database synced');
+    app.listen(PORT, () => {
+      console.log(`Server running at http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to sync database:', err);
+  });
