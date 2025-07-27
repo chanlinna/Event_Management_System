@@ -1,29 +1,63 @@
+// Customer-Frontend/src/components/NavBar/NavBar.jsx
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { clearAuth } from '../../utils/auth';
+import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
 
-function NavBar() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    clearAuth();
-    navigate('/login');
-  };
+const NavBar = () => {
+  const location = useLocation();
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">EventNa</div>
-      <ul className="navbar-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#venues-catering">Venues & Catering</a></li>
-        <li><a href="#events-booking">Events Booking</a></li>
-        <li><a href="#our-services">Our Services</a></li>
-        <li><a href="#about-us">About Us</a></li>
-        <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
-      </ul>
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
+          EventNA
+        </Link>
+        
+        <ul className="nav-menu">
+          <li className="nav-item">
+            <Link 
+              to="/" 
+              className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+            >
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link 
+              to="/venues" 
+              className={`nav-link ${location.pathname === '/venues' ? 'active' : ''}`}
+            >
+              Venues
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link 
+              to="/catering" 
+              className={`nav-link ${location.pathname === '/catering' ? 'active' : ''}`}
+            >
+              Catering
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link 
+              to="/events" 
+              className={`nav-link ${location.pathname === '/events' ? 'active' : ''}`}
+            >
+              Events
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link 
+              to="/booking" 
+              className={`nav-link ${location.pathname === '/booking' ? 'active' : ''}`}
+            >
+              Booking
+            </Link>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
-}
+};
 
 export default NavBar;

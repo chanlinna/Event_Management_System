@@ -1,11 +1,13 @@
 import { getAllVenues, createVenue, getVenueById, updateVenue, deleteVenue } from "../controllers/venueController.js";
-
+import upload from '../middlewares/upload.middleware.js';
 import express from 'express';
+import multer from 'multer';
 
 const router = express.Router();
 
+router.post('/', upload.single('image'), createVenue);
+
 router.get('/', getAllVenues);
-router.post('/', createVenue);
 router.get('/:id', getVenueById);
 router.put('/:id', updateVenue);
 router.delete('/:id', deleteVenue);

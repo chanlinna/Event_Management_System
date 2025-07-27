@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './HomePage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import HeroSection from '../../components/HeroSection/HeroSection';
-import VenuesSection from '../../components/VenuesSection/VenuesSection';
-import CateringSection from '../../components/CateringSection/CateringSection'; // NEW IMPORT
+import VenuesList from '../../components/VenuesList/VenuesList';
+import CateringSection from '../../components/CateringSection/CateringSection';
 import TestimonialsSection from '../../components/TestimonialsSection/TestimonialsSection';
 import Footer from '../../components/Footer/Footer';
-
+import { Link } from 'react-router-dom';
 
 function HomePage() {
     return (
@@ -14,19 +14,29 @@ function HomePage() {
             <NavBar />
             <HeroSection />
 
-            {/* Our Services Section - Integrated directly (remains as is) */}
+            {/* Our Services Section */}
             <section id="our-services" className={styles['our-services-section']}>
-                <h2>Our Services</h2>
-                <p>
-                    EventEase offers a seamless experience in planning and managing events, from venues to catering, ensuring every detail is perfect.
-                </p>
+                <div className="container">
+                    <h2>Our Services</h2>
+                    <p>
+                        EventNA offers a seamless experience in planning and managing events, from venues to catering, ensuring every detail is perfect.
+                    </p>
+                    <button>About Us</button>
+                </div>
             </section>
 
-            <VenuesSection />
+            {/* Venues Section */}
+            <section className={styles['home-venues-section']}>
+                <div className={styles['section-header']}>
+                    <h2>Featured Venues</h2>
+                </div>
+                <VenuesList isHomepage={true} />
+                <Link to="/venues" className={styles['see-more-btn']}>
+                        See More <i className="fas fa-arrow-right"></i>
+                </Link>
+            </section>
 
-            {/* Catering Section - Now a separate component */}
-            <CateringSection /> {/* RENDER THE NEW COMPONENT */}
-
+            <CateringSection />
             <TestimonialsSection />
             <Footer />
         </div>

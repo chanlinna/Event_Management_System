@@ -37,13 +37,27 @@ import db from '../models/index.js';
  *         description: Venue created
  */
 export const createVenue = async (req, res) => {
-    try {
-        const venue = await db.Venue.create(req.body);
-        res.status(201).json(venue);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    const { name, location, max_occupancy, phone, email, price } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const venue = await db.Venue.create({
+      name,
+      location,
+      max_occupancy,
+      phone,
+      email,
+      price,
+      imageUrl,
+    });
+
+    res.status(201).json(venue);
+  } catch (err) {
+    console.error('Create venue error:', err);
+    res.status(500).json({ error: err.message });
+  }
 };
+
 
 /**
  * @swagger

@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import { serveSwagger, setupSwagger } from './config/swagger.js';
 import loginRoute from './routes/loginRoute.js';
@@ -21,6 +22,8 @@ app.use('/auth', loginRoute);
 app.use('/venues', venueRoute);
 app.use('/users', userRoute);
 app.use('/caterings', cateringRoute);
+
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 
 app.get('/', (req, res) => res.send('Welcome to EventNa Management system API!'));
