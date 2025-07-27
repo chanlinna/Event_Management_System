@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { storeAuthToken, checkAuth } from '../../utils/auth';
+import NavBar from '../../components/NavBar/NavBar';
 import axios from 'axios';
 import './Auth.css';
 
@@ -54,6 +55,8 @@ const Login = () => {
   };
 
   return (
+    <div className='container'>
+      <NavBar />
     <div className="auth-container">
       <h2>Login to Continue</h2>
       {error && <div className="auth-error">{error}</div>}
@@ -113,6 +116,7 @@ const Login = () => {
         <p>New user? <a href="/register">Create account</a></p>
         <p><a href="/forgot-password">Forgot password?</a></p>
       </div>
+    </div>
     </div>
   );
 };

@@ -19,18 +19,16 @@ function App() {
       <main className='main-content'>
       
         <Routes>
-          {/* Public routes */}
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
-
-          {/* Protected routes */}
-          <Route element={<AuthLayout />}>
+          <Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/venues" element={<VenuesPage />} />
             <Route path="/venues/:id" element={<VenueDetail />} />
             <Route path="/admin" element={<AdminVenue />} />
+          </Route>
+
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
 
           {/* Redirects */}
