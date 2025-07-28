@@ -77,6 +77,12 @@
   box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
+/* Caterings Section */
+.home-caterings-section {
+  padding: 4rem 1rem;
+  background-color: white;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .section-header {
@@ -90,6 +96,10 @@
   }
   
   .home-venues-section {
+    padding: 3rem 1rem;
+  }
+
+  .home-caterings-section {
     padding: 3rem 1rem;
   }
 }

@@ -3,7 +3,7 @@ import styles from './HomePage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import HeroSection from '../../components/HeroSection/HeroSection';
 import VenuesList from '../../components/VenuesList/VenuesList';
-//import CateringSection from '../../components/CateringSection/CateringSection';
+import CateringsList from '../../components/CateringsList/CateringsList';
 import TestimonialsSection from '../../components/TestimonialsSection/TestimonialsSection';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
@@ -28,10 +28,21 @@ function HomePage() {
             {/* Venues Section */}
             <section className={styles['home-venues-section']}>
                 <div className={styles['section-header']}>
-                    <h2>Featured Venues</h2>
+                    <h2>Venues</h2>
                 </div>
                 <VenuesList isHomepage={true} />
                 <Link to="/venues" className={styles['see-more-btn']}>
+                        See More <i className="fas fa-arrow-right"></i>
+                </Link>
+            </section>
+
+            {/* Caterings Section */}
+            <section className={styles['home-caterings-section']}>
+                <div className={styles['section-header']}>
+                    <h2>Catering Sets</h2>
+                </div>
+                <CateringsList isHomepage={true} />
+                <Link to="/caterings" className={styles['see-more-btn']}>
                         See More <i className="fas fa-arrow-right"></i>
                 </Link>
             </section>
