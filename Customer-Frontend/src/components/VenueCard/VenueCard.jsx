@@ -1,11 +1,21 @@
 // VenueCard.js
 import React from 'react';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom'; 
 import './VenueCard.css'; 
 
 const VenueCard = ({ venue }) => {
   if (!venue) {
     return null; 
+=======
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import './VenueCard.css'; // We'll create this CSS file next
+
+const VenueCard = ({ venue }) => {
+  // Ensure venue object and its properties exist before rendering
+  if (!venue) {
+    return null; // Or a loading/error state
+>>>>>>> 3c2fac58aec41faafccf3e4ba996cb8178120f89
   }
 
   return (
@@ -34,7 +44,15 @@ const VenueCard = ({ venue }) => {
             <span className="price">${venue.price} per day</span>
           </div>
 
+<<<<<<< HEAD
 
+=======
+          {/* Book this Venue Button */}
+          {/* You might want this button to navigate to a specific booking form
+              or trigger a modal, but for simplicity, we'll keep it within the Link for now.
+              If it needs separate behavior, it should be outside the parent Link or have
+              an onClick that stops propagation. */}
+>>>>>>> 3c2fac58aec41faafccf3e4ba996cb8178120f89
           <button className="book-button">Book this Venue</button>
         </div>
       </div>
