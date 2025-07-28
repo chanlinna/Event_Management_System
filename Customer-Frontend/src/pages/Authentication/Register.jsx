@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from '../../components/NavBar/NavBar';
 import './Auth.css';
 
 const Register = () => {
@@ -33,6 +34,8 @@ const Register = () => {
   };
 
   return (
+    <div className='container'>
+      <NavBar />
     <div className="auth-container">
       <h2>Create Your Account</h2>
       {error && <div className="auth-error">{error}</div>}
@@ -79,6 +82,7 @@ const Register = () => {
       <div className="auth-footer">
         Already have an account? <a href="/login">Sign in</a>
       </div>
+    </div>
     </div>
   );
 };

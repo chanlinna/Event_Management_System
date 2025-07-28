@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from '../../api/axios'; // Your axios instance
+import axios from '../../api/axios';
 
 export default function AdminVenue() {
   const [name, setName] = useState('');

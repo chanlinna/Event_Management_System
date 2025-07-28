@@ -14,7 +14,8 @@ export default (sequelize, DataTypes) => sequelize.define('Catering', {
     validate: {
       min: 0
     }
-  }
+  },
+  imageUrl: { type: DataTypes.STRING(255), allowNull: true },
 }, {
   timestamps: false,
   tableName: 'caterings'

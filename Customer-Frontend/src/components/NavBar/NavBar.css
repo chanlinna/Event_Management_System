@@ -30,7 +30,7 @@
 /* Logo Styles with Righteous font */
 .navbar-logo {
   font-family: 'Righteous', cursive;
-  color: #2c3e50;
+  color: #5D8191;
   text-decoration: none;
   font-size: 1.8rem;
   font-weight: 400; /* Righteous looks better with normal weight */
@@ -132,7 +132,7 @@
 
 .user-icon {
   font-size: 1.5rem;
-  color: #3498db;
+  color: #5D8191;
 }
 
 /* Dropdown Menu */
@@ -213,7 +213,7 @@
 }
 
 .auth-link.register {
-  background-color: #3498db;
+  background-color: #5D8191;
   color: white;
 }
 

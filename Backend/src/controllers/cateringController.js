@@ -33,7 +33,13 @@ import db from '../models/index.js';
  */
 export const createCatering = async (req, res) => {
     try {
-        const catering = await db.Catering.create(req.body);
+        const { catering_set, price } = req.body;
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+        const catering = await db.Catering.create({
+            catering_set,
+            price,
+            imageUrl,
+        });
         res.status(201).json(catering);
     } catch (err) {
         res.status(500).json({ error: err.message });

@@ -58,7 +58,7 @@ const Login = () => {
     <div className='container'>
       <NavBar />
     <div className="auth-container">
-      <h2>Login to Continue</h2>
+      <h2>Login</h2>
       {error && <div className="auth-error">{error}</div>}
       
       <form onSubmit={handleSubmit}>

@@ -9,6 +9,7 @@ import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
 import AuthLayout from './components/layouts/AuthLayout';
 import AdminVenue from './pages/Admin/AdminVenue';
+import AdminCatering from './pages/Admin/AdminCatering';
 import VenueDetail from './pages/VenueDetail/VenueDetail';
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/venues" element={<VenuesPage />} />
             <Route path="/venues/:id" element={<VenueDetail />} />
             <Route path="/admin" element={<AdminVenue />} />
+            <Route path="/admin/catering" element={<AdminCatering />} />
           </Route>
 
           <Route element={<AuthLayout />}>

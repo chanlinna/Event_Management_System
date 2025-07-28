@@ -3,7 +3,7 @@ import styles from './HomePage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import HeroSection from '../../components/HeroSection/HeroSection';
 import VenuesList from '../../components/VenuesList/VenuesList';
-import CateringSection from '../../components/CateringSection/CateringSection';
+//import CateringSection from '../../components/CateringSection/CateringSection';
 import TestimonialsSection from '../../components/TestimonialsSection/TestimonialsSection';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
@@ -36,7 +36,7 @@ function HomePage() {
                 </Link>
             </section>
 
-            <CateringSection />
+        
             <TestimonialsSection />
             <Footer />
         </div>
