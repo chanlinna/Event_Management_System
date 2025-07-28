@@ -4,13 +4,12 @@ import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import VenuesPage from './pages/VenuesPage/VenuesPage';
-//import VenueCateringPage from './pages/venue_catering/venue_catering';
+import CateringsPage from './pages/CateringsPage/CateringsPage';
 import Login from './pages/Authentication/Login';
 import Register from './pages/Authentication/Register';
 import AuthLayout from './components/layouts/AuthLayout';
 import AdminVenue from './pages/Admin/AdminVenue';
 import AdminCatering from './pages/Admin/AdminCatering';
-import VenueDetail from './pages/VenueDetail/VenueDetail';
 import './App.css';
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
           <Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/venues" element={<VenuesPage />} />
-            <Route path="/venues/:id" element={<VenueDetail />} />
+            <Route path="/caterings" element={<CateringsPage />} />
             <Route path="/admin" element={<AdminVenue />} />
             <Route path="/admin/catering" element={<AdminCatering />} />
           </Route>

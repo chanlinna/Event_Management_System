@@ -1,16 +1,16 @@
-.venues-page {
+.caterings-page {
     display: flex;
     flex-direction: column;
 }
 
-.venues-page-content-wrapper { 
+.caterings-page-content-wrapper { 
     max-width: 1200px;
     margin: 0 auto;    
 }
 
 /* Responsive adjustments for the wrapper */
 @media (max-width: 768px) {
-    .venues-page-content-wrapper {
+    .caterings-page-content-wrapper {
         max-width: 100%;
     }
 }
