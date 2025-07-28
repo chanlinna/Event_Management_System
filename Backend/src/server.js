@@ -26,6 +26,7 @@ app.use('/caterings', cateringRoute);
 app.use('/events', eventRoute);
 
 
+
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 
