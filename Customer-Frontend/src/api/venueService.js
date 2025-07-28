@@ -1,4 +1,3 @@
-// Customer-Frontend/src/api/venueService.js
 import api from './axios';
 
 export const getVenues = async (page = 1, limit = 10, sortby = 'max_occupancy') => {
