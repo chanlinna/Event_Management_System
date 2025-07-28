@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import VenuesList from '../../components/VenuesList/VenuesList';
-import './VenuesPage.css'; //
+import './VenuesPage.css'; 
 
 const VenuesPage = () => {
     const [filters, setFilters] = useState({

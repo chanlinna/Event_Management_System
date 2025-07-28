@@ -10,7 +10,7 @@ const VenuesList = ({ isHomepage = false }) => {
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: isHomepage ? 3 : 12,
+    limit: isHomepage ? 3 : 6,
     totalItems: 0,
     totalPages: 1
   });

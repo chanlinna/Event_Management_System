@@ -10,6 +10,7 @@ import Register from './pages/Authentication/Register';
 import AuthLayout from './components/layouts/AuthLayout';
 import AdminVenue from './pages/Admin/AdminVenue';
 import AdminCatering from './pages/Admin/AdminCatering';
+import EventPage from './pages/EventPage/EventPage';
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/caterings" element={<CateringsPage />} />
             <Route path="/admin" element={<AdminVenue />} />
             <Route path="/admin/catering" element={<AdminCatering />} />
+            <Route path="/events" element={<EventPage />} />
           </Route>
 
           <Route element={<AuthLayout />}>

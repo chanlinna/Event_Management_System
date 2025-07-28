@@ -2,13 +2,13 @@ import enums from './enums.js';
 export default (sequelize, DataTypes) =>
     sequelize.define('Event', {
         eventId: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-        name: { type: DataTypes.STRING(255), allowNull: false }, 
+        name: { type: DataTypes.STRING(255), allowNull: false },
         startDate: { type: DataTypes.DATE, allowNull: false },
         end_date: {
             type: DataTypes.DATE,
             validate: {
             isAfterStartDate(value) {
-                if (value <= this.start_date) {
+                if (value <= this.startDate) { // Corrected: use this.startDate
                 throw new Error('End date must be after start date');
                 }
             }
@@ -46,7 +46,8 @@ export default (sequelize, DataTypes) =>
             model: 'customers',
             key: 'custId'
             }
-        }
+        },
+        imageUrl: { type: DataTypes.STRING(255), allowNull: true }
     }, {
         timestamps: false,
         tableName: 'events'

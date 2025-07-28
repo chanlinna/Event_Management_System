@@ -1,0 +1,184 @@
+/* Customer-Frontend/src/components/EventsList/EventsList.css */
+
+/* Container styles */
+.events-list-container {
+  max-width: 1200px; /* Limits the overall width of your content */
+  margin: 0 auto; /* Centers the container horizontally */
+  padding: 0 1.5rem; /* Added slightly more horizontal padding for better spacing on large screens */
+}
+
+/* Header styles */
+.events-header { /* Renamed from venues-header */
+  margin-bottom: 3rem; /* Increased spacing below the header for better visual separation */
+  text-align: center;
+  display: flex; /* Use flexbox to align header content */
+  flex-direction: column; /* Stack h2 and sort-options vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.events-header h2 { /* Renamed from venues-header h2 */
+  font-size: 2.2rem; /* Slightly larger heading for prominence */
+  color: #2c3e50;
+  margin-bottom: 1rem; /* Space between title and sort options */
+  font-weight: 600;
+}
+
+/* Sort Options Styles */
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between "Sort by:" label and the select dropdown */
+  margin-top: 1rem; /* Space between h2 and sort options */
+  background-color: #363a40; /* Dark background from image */
+  border-radius: 8px; /* Rounded corners for the container */
+  padding: 10px 15px; /* Padding inside the sort options container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.sort-options label {
+  color: #ffffff; /* White text for the label */
+  font-size: 1rem;
+  font-weight: 500;
+  margin-right: 5px; /* Slight space from the dropdown */
+}
+
+.sort-options select {
+  padding: 8px 12px; /* Padding inside the select box */
+  border: none; /* No border for a cleaner look */
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #4a4f56; /* Slightly lighter dark background for the select */
+  color: #ffffff; /* White text for the selected value */
+  cursor: pointer;
+  -webkit-appearance: none; /* Remove default arrow in WebKit browsers */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  appearance: none; /* Remove default arrow */
+  /* Custom arrow for the dropdown */
+  background-image: url('data:image/svg+xml;utf8,<svg fill=\'white\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 10px); /* Position arrow on the right */
+  background-position-y: center;
+  padding-right: 30px; /* Make space for the custom arrow */
+}
+
+.sort-options select:focus {
+  outline: none; /* Remove outline on focus */
+  box-shadow: 0 0 0 2px #6a5acd; /* Soft purple glow on focus */
+}
+
+.sort-options select option {
+  background-color: #363a40; /* Dark background for options */
+  color: #ffffff; /* White text for options */
+  padding: 10px; /* Padding for each option */
+}
+
+.sort-options select option:checked {
+  background-color: #555c66; /* Slightly different background for selected option */
+}
+
+
+/* Grid layout for event cards */
+.events-grid { /* Renamed from venues-grid */
+  display: grid;
+  /* Explicitly set to 3 columns for larger screens. Each column takes equal fraction of space. */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; /* Consistent spacing between grid items */
+  margin-bottom: 3rem; /* Space below the grid */
+  padding: 0 1rem; /* Added slight horizontal padding within the grid for smaller gaps near container edges */
+  justify-items: center; /* Center items within their grid cell */
+}
+
+.no-events-found {
+  grid-column: 1 / -1; /* Make it span all columns */
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+  padding: 50px;
+}
+
+/* See More button styles for homepage */
+.see-more-container {
+  text-align: center;
+  margin-top: 2.5rem; /* Adjusted margin for consistency */
+}
+
+.see-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: #3498db;
+  border: 2px solid #3498db;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.see-more-btn:hover {
+  background-color: #3498db;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.see-more-btn i {
+  transition: transform 0.3s ease;
+}
+
+.see-more-btn:hover i {
+  transform: translateX(3px);
+}
+
+/* Loading and error states */
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) { /* Adjusted breakpoint for 2 columns on medium screens */
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+    gap: 1.5rem; /* Slightly smaller gap for 2 columns */
+  }
+}
+
+@media (max-width: 768px) {
+  .events-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .events-grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 1.5rem;
+    padding: 0; /* Remove horizontal padding for single column to maximize width */
+  }
+
+  .events-list-container {
+    padding: 0 1rem; /* Slightly less padding on very small screens */
+  }
+
+  .sort-options {
+    flex-direction: column; /* Stack label and select on small screens */
+    gap: 5px;
+    padding: 8px 10px;
+  }
+
+  .sort-options label {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) { /* Even smaller screens */
+  .events-header h2 {
+    font-size: 1.6rem;
+  }
+}
