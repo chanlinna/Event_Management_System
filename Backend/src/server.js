@@ -7,6 +7,7 @@ import venueRoute from './routes/venueRoute.js';
 import userRoute from './routes/userRoute.js';
 import cateringRoute from './routes/cateringRoute.js';
 import eventRoute from './routes/eventRoute.js';
+import bookingRoute from './routes/bookingRoute.js';
 import cors from 'cors';
 import db from './models/index.js';
 
@@ -24,6 +25,7 @@ app.use('/venues', venueRoute);
 app.use('/users', userRoute);
 app.use('/caterings', cateringRoute);
 app.use('/events', eventRoute);
+app.use('/bookings', bookingRoute);
 
 
 

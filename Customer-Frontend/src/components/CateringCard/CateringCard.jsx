@@ -1,14 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import './CateringCard.css'; 
 
 const CateringCard = ({ catering }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   if (!catering) {
     return null; 
   }
 
+  const handleBookCatering = () => {
+    navigate('/booking', {
+      state: { 
+        selectedCatering: catering,
+        formData: location.state?.formData
+      },
+    });
+  };
+
   return (
-    <Link to={`/caterings/${catering.id}`} className="catering-card-link">
       <div className="catering-card">
         {/* Catering Image */}
         <img
@@ -27,10 +38,9 @@ const CateringCard = ({ catering }) => {
           </div>
 
 
-          <button className="book-button" style={{background : "#5D8191"}}>Book this Catering</button>
+          <button onClick={handleBookCatering} className="book-button" style={{background : "#5D8191"}}>Book this Catering</button>
         </div>
       </div>
-    </Link>
   );
 };
 

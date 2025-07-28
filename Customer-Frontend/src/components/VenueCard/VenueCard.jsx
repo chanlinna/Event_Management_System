@@ -1,44 +1,48 @@
 // VenueCard.js
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import './VenueCard.css'; 
+import './VenueCard.css';
 
 const VenueCard = ({ venue }) => {
-  if (!venue) {
-    return null; 
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (!venue) return null;
+
+  const handleBookVenue = () => {
+    navigate('/booking', {
+      state: { 
+        selectedVenue: venue,
+        formData: location.state?.formData
+       },
+    });
+  };
 
   return (
-    <Link to={`/venue/${venue.id}`} className="venue-card-link">
-      <div className="venue-card">
-        {/* Venue Image */}
-        <img
-          src={`http://localhost:3000${venue.imageUrl}`}
-          alt={venue.name}
-          className="venue-image"
-        />
+    <div className="venue-card">
+      <img
+        src={`http://localhost:3000${venue.imageUrl}`}
+        alt={venue.name}
+        className="venue-image"
+      />
 
-        <div className="venue-details">
-          {/* Venue Name */}
-          <h3 className="venue-name">{venue.name}</h3>
+      <div className="venue-details">
+        <h3 className="venue-name">{venue.name}</h3>
+        <p className="venue-location">
+          <FaMapMarkerAlt className="location-icon" /> {venue.location}
+        </p>
 
-          {/* Venue Location */}
-          <p className="venue-location">
-            <FaMapMarkerAlt className="location-icon" /> {venue.location}
-          </p>
-
-          <div className="venue-specs">
-            {/* Max Occupancy */}
-            <span className="max-occupancy">Max member: {venue.max_occupancy}</span>
-            {/* Price */}
-            <span className="price">${venue.price} per day</span>
-          </div>
-
-          <button className="book-button" style={{background : "#5D8191"}}>Book this Venue</button>
+        <div className="venue-specs">
+          <span className="max-occupancy">Max member: {venue.max_occupancy}</span>
+          <span className="price">${venue.price} per day</span>
         </div>
+
+        <button onClick={handleBookVenue} className="book-button" style={{ background: "#5D8191" }}>
+          Book this Venue
+        </button>
       </div>
-    </Link>
+    </div>
   );
 };
 

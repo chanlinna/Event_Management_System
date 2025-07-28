@@ -4,7 +4,7 @@ import VenueCard from '../VenueCard/VenueCard';
 import Pagination from '../Pagination/Pagination';
 import './VenuesList.css';
 
-const VenuesList = ({ isHomepage = false, searchFilters = null }) => {
+const VenuesList = ({ isHomepage = false, searchFilters = null, formData = null }) => {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -80,7 +80,11 @@ const VenuesList = ({ isHomepage = false, searchFilters = null }) => {
       <div className="venues-grid">
         {venues.length > 0 ? (
           venues.map(venue => (
-            <VenueCard key={venue.id || venue.venueId} venue={venue} />
+            <VenueCard 
+              key={venue.id || venue.venueId} 
+              venue={venue} 
+              formData={formData}  // Pass formData to each VenueCard
+            />
           ))
         ) : (
           <div className="no-results">

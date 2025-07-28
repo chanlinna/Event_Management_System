@@ -51,13 +51,21 @@ const NavBar = () => {
               Events
             </Link>
           </li>
-          {isLoggedIn && (
-            <li className="nav-item">
-              <Link to="/booking" className={`nav-link ${location.pathname === '/booking' ? 'active' : ''}`}>
-                Booking
-              </Link>
-            </li>
-          )}
+          <li className="nav-item">
+            <button
+              className={`nav-link nav-button ${location.pathname === '/booking' ? 'active' : ''}`}
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate('/booking');
+                } else {
+                  navigate('/login');
+                }
+              }}
+            >
+              Booking
+            </button>
+          </li>
+
         </ul>
 
         <div className="account-section">

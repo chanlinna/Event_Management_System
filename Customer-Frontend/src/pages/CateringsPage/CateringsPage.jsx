@@ -1,9 +1,11 @@
 import React, { useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import CateringsList from '../../components/CateringsList/CateringsList';
-import './CateringsPage.css'; //
+import './CateringsPage.css';
 
 const CateringsPage = () => {
+    const location = useLocation();
     const [filters, setFilters] = useState({
         cateringSet: '',
         price: '',
@@ -16,7 +18,7 @@ const CateringsPage = () => {
     return (
         <div className="caterings-page"> 
             <NavBar />
-            <CateringsList />
+            <CateringsList formData={location.state?.formData} />
         </div>
     );
 };

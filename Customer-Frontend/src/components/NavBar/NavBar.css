@@ -57,6 +57,12 @@
   height: 100%;
 }
 
+.nav-item button{
+  background-color: white !important;
+  border: none !important;
+  outline: none !important;
+}
+
 /* Menu Links */
 .nav-link {
   color: #333;
@@ -68,6 +74,11 @@
   transition: color 0.3s ease;
   text-transform: uppercase; /* Optional: if you want ALL CAPS like some EventNA designs */
   letter-spacing: 0.5px;
+}
+
+.nav-button {
+  background-color: none !important;
+  border: 0px !important;
 }
 
 /* Active/Hover States */

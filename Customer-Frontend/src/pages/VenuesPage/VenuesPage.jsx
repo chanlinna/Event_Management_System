@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import VenuesList from '../../components/VenuesList/VenuesList';
 import SearchFilters from '../../components/SearchFilters/SearchFilters';
@@ -6,6 +7,7 @@ import Footer from '../../components/Footer/Footer';
 import './VenuesPage.css';
 
 const VenuesPage = () => {
+  const location = useLocation();
   const [searchFilters, setSearchFilters] = useState({
     location: '',
     max_occupancy: '',
@@ -36,7 +38,10 @@ const VenuesPage = () => {
           currentFilters={searchFilters}
           isSearching={isSearching}
         />
-        <VenuesList searchFilters={isSearching ? searchFilters : null} />
+        <VenuesList 
+          searchFilters={isSearching ? searchFilters : null}
+          formData={location.state?.formData} // Pass form data to VenuesList
+        />
       </div>
       <Footer />
     </div>

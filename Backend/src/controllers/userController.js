@@ -108,11 +108,13 @@ export const login = async (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).json({ error: 'Invalid credentials' });
         // jwt.sign(payload,signature,option)
-        const token = jwt.sign({ id: user.userId, email: user.email }, process.env.JWT_SECRET, {
+        console.log("User data before signing JWT:", user);
+        const token = jwt.sign({ userId: user.userId, email: user.email }, process.env.JWT_SECRET, {
             expiresIn: '1d',
         });
+        console.log("Signed JWT payload:", { id: user.userId, email: user.email });
 
-        res.json({ token, user: { id: user.userId, email: user.email } });
+        res.json({ token, user: { userId: user.userId, email: user.email } });
     } catch (err) {
         res.status(500).json({ error: 'Login error', details: err.message });
     }
@@ -123,7 +125,7 @@ export const login = async (req, res) => {
  * Get user profile from token
  */
 export const getUserProfile = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
 
   try {
     const user = await db.User.findByPk(userId, {
@@ -143,7 +145,7 @@ export const getUserProfile = async (req, res) => {
  * Update user info
  */
 export const updateUser = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.userId;
   const { username, email } = req.body;
 
   if (!username || !email) {

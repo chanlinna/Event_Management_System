@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) =>
             type: DataTypes.DATE,
             validate: {
             isAfterStartDate(value) {
-                if (value <= this.startDate) { // Corrected: use this.startDate
+                if (value <= this.startDate) { 
                 throw new Error('End date must be after start date');
                 }
             }
