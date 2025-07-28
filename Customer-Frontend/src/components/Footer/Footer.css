@@ -9,11 +9,20 @@
   margin: 0 auto;
 }
 
+.footer-section-brand-section{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+
 .footer-content {
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
   margin-bottom: 32px;
+  display: flex;
+  justify-content: space-around;
 }
 
 @media (min-width: 768px) {
@@ -25,6 +34,7 @@
 .footer-section {
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .brand-section {
@@ -32,6 +42,7 @@
 }
 
 .brand-title {
+  font-family: 'Righteous', cursive;
   font-size: 1.875rem;
   font-weight: 700;
   color: #5d8191;
@@ -78,10 +89,11 @@
   gap: 16px;
 }
 
-.nav-link {
+.nav-link{
   color: #303030;
   text-decoration: none;
   transition: color 0.3s ease;
+  font-size: 14px;
 }
 
 .nav-link:hover {
@@ -99,6 +111,7 @@
   align-items: flex-start;
   gap: 12px;
 }
+
 
 .contact-icon {
   width: 20px;

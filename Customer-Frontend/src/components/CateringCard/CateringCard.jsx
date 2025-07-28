@@ -23,11 +23,11 @@ const CateringCard = ({ catering }) => {
 
           <div className="catering-specs">
             {/* Price */}
-            <span className="price">${catering.price} per day</span>
+            <span className="price">${catering.price} per set</span>
           </div>
 
 
-          <button className="book-button">Book this Catering</button>
+          <button className="book-button" style={{background : "#5D8191"}}>Book this Catering</button>
         </div>
       </div>
     </Link>

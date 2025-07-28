@@ -8,8 +8,8 @@
 /* Our Services Section */
 .our-services-section {
   text-align: center;
-  padding: 4rem 1rem;
-  background-color: #f8f9fa;
+  padding: 5rem 1rem;
+  background-color: white;
 }
 
 .our-services-section h2 {
@@ -30,14 +30,21 @@
 .our-services-section button{
     background-color: #5D8191;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 30px;
     border-radius: 12px;
+}
+
+.our-services-section button:hover {
+  background-color: #2A3439;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
 /* Venues Section */
 .home-venues-section {
   padding: 4rem 1rem;
-  background-color: white;
+  background-color: #f8f9fa;
 }
 
 .section-header {
@@ -58,23 +65,21 @@
 .see-more-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background-color: #5D8191;
-  color: white;
-  border: 0px solid #3498db;
-  border-radius: 30px;
+  background-color: none;
+  color: #5D8191;
+  border: 0px solid #5D8191;
+  border-radius: 12px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 1rem;
+  gap: 5px;
 }
 
 .see-more-btn:hover {
-  background-color: #2A3439;
-  color: white;
+  color: #2A3439;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
 /* Caterings Section */

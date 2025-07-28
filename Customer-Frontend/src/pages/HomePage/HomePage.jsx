@@ -2,11 +2,13 @@ import React from 'react';
 import styles from './HomePage.module.css';
 import NavBar from '../../components/NavBar/NavBar';
 import HeroSection from '../../components/HeroSection/HeroSection';
+import HeroSection2 from '../../components/HeroSection2/HeroSection2';
 import VenuesList from '../../components/VenuesList/VenuesList';
 import CateringsList from '../../components/CateringsList/CateringsList';
 import TestimonialsSection from '../../components/TestimonialsSection/TestimonialsSection';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
+import { FaChevronRight } from 'react-icons/fa';
 
 function HomePage() {
     return (
@@ -32,7 +34,7 @@ function HomePage() {
                 </div>
                 <VenuesList isHomepage={true} />
                 <Link to="/venues" className={styles['see-more-btn']}>
-                        See More <i className="fas fa-arrow-right"></i>
+                        See More Venues <FaChevronRight /><i className="fas fa-arrow-right"></i>
                 </Link>
             </section>
 
@@ -43,12 +45,14 @@ function HomePage() {
                 </div>
                 <CateringsList isHomepage={true} />
                 <Link to="/caterings" className={styles['see-more-btn']}>
-                        See More <i className="fas fa-arrow-right"></i>
+                        See More Caterings <FaChevronRight /> <i className="fas fa-arrow-right"></i>
                 </Link>
             </section>
 
         
             <TestimonialsSection />
+            <HeroSection2 />
+            {/* Footer */}
             <Footer />
         </div>
     );

@@ -7,7 +7,7 @@ const Footer = () => {
         {/* Main footer content */}
         <div className="footer-content">
           {/* Left section - Brand and social media */}
-          <div className="footer-section brand-section">
+          <div className="footer-section-brand-section">
             <h2 className="brand-title">EventNA</h2>
             <div className="social-icons">
               <a href="#" className="social-icon">
