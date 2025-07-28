@@ -1,0 +1,190 @@
+/* Customer-Frontend/src/components/AdminEvent/AdminEvent.css */
+
+.admin-event-container {
+  max-width: 700px; /* Increased max-width for a bit more space */
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern sans-serif font */
+  color: #333;
+}
+
+.admin-event-container h2 {
+  text-align: center;
+  color: #2c3e50; /* Darker blue-grey for heading */
+  margin-bottom: 30px;
+  font-size: 2.2em; /* Slightly larger heading */
+  font-weight: 700;
+}
+
+.admin-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between form groups */
+}
+
+.admin-event-form .form-group {
+  margin-bottom: 0; /* Managed by gap in form */
+}
+
+.admin-event-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 600; /* Bolder labels */
+  font-size: 0.95em;
+}
+
+/* General styling for all text-based inputs and textareas */
+.admin-event-form input[type="text"],
+.admin-event-form input[type="date"],
+.admin-event-form input[type="time"],
+.admin-event-form input[type="number"],
+.admin-event-form textarea,
+.admin-event-form select {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  border: 1px solid #c0c0c0; /* Lighter border */
+  border-radius: 6px; /* Slightly more rounded corners */
+  font-size: 1em;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-event-form input:focus,
+.admin-event-form textarea:focus,
+.admin-event-form select:focus {
+  outline: none;
+  border-color: #3498db; /* Blue highlight on focus */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* Soft blue glow */
+}
+
+.admin-event-form textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 80px;
+}
+
+/* File input specific styling */
+.admin-event-form input[type="file"] {
+  padding: 10px; /* Adjust padding for file input */
+  border: 1px dashed #a0a0a0; /* Dashed border for file input */
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.admin-event-form input[type="file"]:hover {
+  border-color: #3498db;
+}
+
+/* Catering Section Styling */
+.catering-section {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fcfcfc;
+}
+
+.catering-section > label {
+  font-size: 1.1em;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.catering-row {
+  display: flex;
+  gap: 10px; /* Space between catering ID input, num sets input, and remove button */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.catering-row input[type="number"] {
+  flex: 1; /* Inputs take equal available space */
+}
+
+.remove-catering-btn {
+  padding: 8px 12px;
+  background-color: #e74c3c; /* Red color for remove */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.remove-catering-btn:hover {
+  background-color: #c0392b;
+}
+
+.add-catering-btn {
+  display: block; /* Make it a block button */
+  width: auto; /* Adjust width based on content */
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #2ecc71; /* Green color for add */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.add-catering-btn:hover {
+  background-color: #27ae60;
+}
+
+/* Submit Button */
+.admin-event-form button[type="submit"] {
+  width: 100%;
+  padding: 15px 25px; /* Larger padding */
+  background: linear-gradient(to right, #6a5acd, #ee82ee); /* Gradient consistent with other buttons */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.15em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 30px; /* More space above submit button */
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.admin-event-form button[type="submit"]:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-3px); /* More pronounced lift effect */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.admin-event-form button[type="submit"]:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Messages */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #badbcc;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.95em;
+}

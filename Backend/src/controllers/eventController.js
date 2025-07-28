@@ -22,149 +22,138 @@ const getOrderOptions = (sortBy) => {
 // @desc    Create a new event
 // @route   POST /events
 // @access  Private (e.g., requires authentication)
+// 
+
 export const createEvent = async (req, res) => {
+  console.log('--- createEvent: Request received ---');
   const transaction = await sequelize.transaction();
   try {
     const {
-      name,
-      startDate,
-      end_date,
-      desc,
-      budget,
-      status,
-      eventTypeId,
-      venueId,
-      custId,
-      cateringIds,
-      num_of_sets
-    } = req.body; // imageUrl is NOT destructured from req.body now
+      name, startDate, end_date, desc, budget, status,
+      eventTypeId, venueId, custId,
+      cateringIds, // These are strings from req.body
+      numOfSets // These are strings from req.body
+    } = req.body;
 
-    // --- NEW: Handle imageUrl from file upload ---
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    console.log('createEvent: Request Body (raw):', req.body); // Keep for debugging raw
+    console.log('createEvent: Uploaded Image URL:', imageUrl);
+    console.log('createEvent: File object (if present):', req.file);
+
+    // --- NEW: Parse cateringIds and numOfSets to actual numbers ---
+    let parsedCateringIds = [];
+    let parsedNumOfSets = [];
+
+    if (cateringIds) { // Check if cateringIds exist from req.body
+      // If cateringIds comes as a single string "1", or "1,2", split it
+      // If it comes as an array ['1'], map it directly.
+      const rawCateringIds = Array.isArray(cateringIds) ? cateringIds : (cateringIds ? cateringIds.split(',') : []);
+      const rawNumOfSets = Array.isArray(numOfSets) ? numOfSets : (numOfSets ? numOfSets.split(',') : []);
+
+      parsedCateringIds = rawCateringIds.map(id => parseInt(id)).filter(id => !isNaN(id));
+      parsedNumOfSets = rawNumOfSets.map(num => parseInt(num)).filter(num => !isNaN(num));
+    }
+    console.log('createEvent: Parsed cateringIds:', parsedCateringIds); // NEW LOG
+    console.log('createEvent: Parsed numOfSets:', parsedNumOfSets);     // NEW LOG
     // --- END NEW ---
 
-    // 1. Server-side Validation
-    if (!name || !startDate || !eventTypeId || !venueId || !custId) {
-      // Optional: Clean up uploaded file if validation fails here
-      if (req.file) {
-        // You would need a utility function to delete the file from the uploads folder
-        // For example: deleteFile(req.file.path);
-        console.warn(`Uploaded file ${req.file.filename} will not be used due to missing required fields.`);
-      }
-      await transaction.rollback();
-      return res.status(400).json({ message: 'Missing required event fields: name, startDate, eventTypeId, venueId, custId.' });
-    }
-
-    if (end_date && new Date(end_date) <= new Date(startDate)) {
+    // 1. Server-side Validation (use parsed values now)
+    if (!name || !startDate || !end_date || !venueId || !eventTypeId || !custId) {
       if (req.file) { /* deleteFile(req.file.path); */ }
       await transaction.rollback();
-      return res.status(400).json({ message: 'End date must be after start date.' });
+      return res.status(400).json({ message: 'Missing required event fields: name, startDate, end_date, venueId, eventTypeId, custId.' });
     }
 
-    if (budget !== undefined && (isNaN(budget) || budget < 0)) {
-        if (req.file) { /* deleteFile(req.file.path); */ }
+    // You might also need to parse venueId, eventTypeId, custId if they are strings from req.body
+    const parsedVenueId = parseInt(venueId);
+    const parsedEventTypeId = parseInt(eventTypeId);
+    const parsedCustId = parseInt(custId);
+
+    if (isNaN(parsedVenueId) || isNaN(parsedEventTypeId) || isNaN(parsedCustId)) {
         await transaction.rollback();
-        return res.status(400).json({ message: 'Budget must be a non-negative number.' });
+        return res.status(400).json({ message: 'Venue ID, Event Type ID, and Customer ID must be valid numbers.' });
     }
 
-    if (status && !enums.StatusEnum.includes(status)) {
-        if (req.file) { /* deleteFile(req.file.path); */ }
-        await transaction.rollback();
-        return res.status(400).json({ message: `Invalid status. Must be one of: ${enums.StatusEnum.join(', ')}.` });
-    }
 
+    // ... (rest of your existing validation logic using parsedVenueId, parsedEventTypeId, parsedCustId) ...
     const [eventType, venue, customer] = await Promise.all([
-      EventType.findByPk(eventTypeId),
-      Venue.findByPk(venueId),
-      Customer.findByPk(custId)
+      EventType.findByPk(parsedEventTypeId), // Use parsed ID
+      Venue.findByPk(parsedVenueId),       // Use parsed ID
+      Customer.findByPk(parsedCustId)       // Use parsed ID
     ]);
+    // ...
 
-    if (!eventType) {
-      if (req.file) { /* deleteFile(req.file.path); */ }
-      await transaction.rollback();
-      return res.status(404).json({ message: `EventType with ID ${eventTypeId} not found.` });
-    }
-    if (!venue) {
-      if (req.file) { /* deleteFile(req.file.path); */ }
-      await transaction.rollback();
-      return res.status(404).json({ message: `Venue with ID ${venueId} not found.` });
-    }
-    if (!customer) {
-      if (req.file) { /* deleteFile(req.file.path); */ }
-      await transaction.rollback();
-      return res.status(404).json({ message: `Customer with ID ${custId} not found.` });
-    }
-
-    // 2. Create the Event record
+    // 2. Create the Event record (use parsed IDs)
     const newEvent = await Event.create({
-      name,
-      startDate,
-      end_date: end_date || null,
-      desc,
-      budget,
-      status: status || 'pending',
-      eventTypeId,
-      venueId,
-      custId,
-      imageUrl, // <--- Now using the imageUrl derived from req.file
+      name, startDate, end_date: end_date || null, desc, budget, status: status || 'pending',
+      eventTypeId: parsedEventTypeId, // Use parsed ID
+      venueId: parsedVenueId,         // Use parsed ID
+      custId: parsedCustId,           // Use parsed ID
+      imageUrl,
     }, { transaction });
 
-    // 3. Handle EventCatering (Many-to-Many relationship) (same as before)
-    if (cateringIds && cateringIds.length > 0) {
-      if (!Array.isArray(num_of_sets) || cateringIds.length !== num_of_sets.length) {
-        if (req.file) { /* deleteFile(req.file.path); */ } // Cleanup if this fails
+    console.log('createEvent: Event created in DB (temporary ID):', newEvent.eventId);
+
+    // 3. Handle EventCatering (Many-to-Many relationship)
+    // Use parsedCateringIds and parsedNumOfSets for this validation and creation
+    if (parsedCateringIds.length > 0) { // Check if we have any parsed catering
+      if (parsedCateringIds.length !== parsedNumOfSets.length) {
+        if (req.file) { /* deleteFile(req.file.path); */ }
         await transaction.rollback();
-        return res.status(400).json({ message: 'num_of_sets array must match cateringIds array in length.' });
+        // This specific error message should ideally now be caught by frontend validation first
+        return res.status(400).json({ message: 'Catering IDs and number of sets arrays must match in length after parsing.' });
       }
 
-      const eventCateringRecords = cateringIds.map((cateringId, index) => ({
+      const eventCateringRecords = parsedCateringIds.map((cateringId, index) => ({
         eventId: newEvent.eventId,
-        cateringId: cateringId,
-        num_of_set: num_of_sets[index] || 1
+        cateringId: cateringId, // Now this is a number
+        num_of_set: parsedNumOfSets[index] // Now this is a number
       }));
 
       const existingCaterings = await Catering.findAll({
-        where: { cateringId: cateringIds }
+        where: { cateringId: parsedCateringIds } // Use parsed IDs here
       });
-      if (existingCaterings.length !== cateringIds.length) {
-        if (req.file) { /* deleteFile(req.file.path); */ } // Cleanup if this fails
+      if (existingCaterings.length !== parsedCateringIds.length) {
+        if (req.file) { /* deleteFile(req.file.path); */ }
         await transaction.rollback();
         return res.status(404).json({ message: 'One or more catering IDs not found.' });
       }
 
       await EventCatering.bulkCreate(eventCateringRecords, { transaction });
+      console.log('createEvent: Catering records created.');
     }
 
     await transaction.commit();
+    console.log('createEvent: Transaction committed successfully.');
 
-    // 4. Send success response with created event (and potentially populated associations)
     const createdEventWithAssociations = await Event.findByPk(newEvent.eventId, {
       include: [
-        { model: EventType },
-        { model: Venue },
-        { model: Customer },
+        { model: EventType }, { model: Venue }, { model: Customer },
         { model: Catering, through: { attributes: ['num_of_set'] } }
       ]
     });
+    console.log('createEvent: Associations populated.');
 
-    res.status(201).json({
-      message: 'Event created successfully!',
-      event: createdEventWithAssociations,
-    });
+    res.status(201).json({ message: 'Event created successfully!', event: createdEventWithAssociations });
 
   } catch (error) {
     await transaction.rollback();
-    console.error('Error creating event:', error);
-    // Important: If an error occurs after file upload but before database save, delete the file!
+    console.error('--- createEvent: Error Caught ---');
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    console.error('Full Error Object:', JSON.stringify(error, null, 2));
+    console.error('Error Stack:', error.stack);
+
     if (req.file) {
-      // You'll need to import 'fs' or your file deletion utility here
-      // Example: fs.unlink(req.file.path, (err) => { if (err) console.error('Error deleting file:', err); });
-      console.error(`Attempting to delete uploaded file: ${req.file.path}`);
-      // Add your file deletion logic here
+      console.error(`Attempting to delete orphaned uploaded file: ${req.file.path}`);
     }
 
     if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
       return res.status(400).json({ message: error.message });
+    }
+    if (error.name === 'SequelizeForeignKeyConstraintError') {
+        return res.status(400).json({ message: 'Foreign key constraint failed. Ensure Venue ID, Event Type ID, Customer ID, and Catering IDs exist.' });
     }
     res.status(500).json({ message: 'Server Error: Could not create event.' });
   }
