@@ -1,0 +1,111 @@
+/* Customer-Frontend/src/components/EventCard/EventCard.css */
+
+.event-card-container {
+  background-color: #ffffff; /* White background */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensures image corners are rounded with the card */
+  width: 300px; /* Fixed width for card as per common UI patterns */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 15px; /* Adjust margin for spacing in a grid/list */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.event-card-container:hover {
+  transform: translateY(-5px); /* Slight lift effect on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.event-image-placeholder {
+  width: 100%;
+  height: 180px; /* Fixed height for the image area */
+  background-color: #e0e0e0; /* Light grey background for placeholder */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd; /* Subtle border below image area */
+  overflow: hidden; /* Ensure content stays within bounds */
+}
+
+.event-image-placeholder .placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888;
+  font-size: 0.9em;
+}
+
+.event-image-placeholder .placeholder-icon {
+  width: 60px; /* Size of the placeholder icon */
+  height: 60px;
+  color: #a0a0a0; /* Color of the placeholder icon */
+  margin-bottom: 5px;
+}
+
+.event-actual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures image covers the area, cropping if necessary */
+  display: block; /* Remove extra space below image */
+}
+
+.event-details-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Spacing between text elements */
+}
+
+.event-name {
+  font-size: 1.5em; /* Larger font for event name */
+  font-weight: 700;
+  color: #333333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.event-dates {
+  font-size: 0.95em;
+  color: #666666;
+  margin: 0;
+}
+
+.event-type {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #007bff; /* A distinct color for event type */
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.event-description {
+  font-size: 0.85em;
+  color: #555555;
+  margin: 10px 0 15px 0; /* More space around description */
+  line-height: 1.4;
+  height: 3em; /* Limit height to 2-3 lines */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for hidden text */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+}
+
+.see-more-btn {
+  display: inline-block; /* Allows padding and margin */
+  padding: 10px 20px;
+  background-color: #333333; /* Dark background as in the image */
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  margin-top: auto; /* Pushes the button to the bottom if container is flex */
+}
+
+.see-more-btn:hover {
+  background-color: #555555; /* Slightly lighter on hover */
+}

@@ -1,26 +1,46 @@
-// Customer-Frontend/src/pages/VenuesPage/VenuesPage.jsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import VenuesList from '../../components/VenuesList/VenuesList';
-import './VenuesPage.css'; //
+import SearchFilters from '../../components/SearchFilters/SearchFilters';
+import Footer from '../../components/Footer/Footer';
+import './VenuesPage.css';
 
 const VenuesPage = () => {
-    const [filters, setFilters] = useState({
-        location: '',
-        capacity: '',
-        eventType: ''
+  const [searchFilters, setSearchFilters] = useState({
+    location: '',
+    max_occupancy: '',
+  });
+
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = (filters) => {
+    setSearchFilters(filters);
+    setIsSearching(true);
+  };
+
+  const handleClearSearch = () => {
+    setSearchFilters({
+      location: '',
+      max_occupancy: '',
     });
+    setIsSearching(false);
+  };
 
-    const handleApplyFilters = useCallback((newFilters) => {
-        setFilters(newFilters);
-    }, []);
-
-    return (
-        <div className="venues-page"> {/* <--- CHANGE THIS LINE (use plain string) */}
-            <NavBar />
-            <VenuesList />
-        </div>
-    );
+  return (
+    <div className="venues-page">
+      <NavBar />
+      <div className="venues-content">
+        <SearchFilters 
+          onSearch={handleSearch}
+          onClear={handleClearSearch}
+          currentFilters={searchFilters}
+          isSearching={isSearching}
+        />
+        <VenuesList searchFilters={isSearching ? searchFilters : null} />
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default VenuesPage;

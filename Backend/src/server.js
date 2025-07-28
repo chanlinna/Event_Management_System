@@ -6,6 +6,7 @@ import loginRoute from './routes/loginRoute.js';
 import venueRoute from './routes/venueRoute.js';
 import userRoute from './routes/userRoute.js';
 import cateringRoute from './routes/cateringRoute.js';
+import eventRoute from './routes/eventRoute.js';
 import cors from 'cors';
 import db from './models/index.js';
 
@@ -22,19 +23,16 @@ app.use('/auth', loginRoute);
 app.use('/venues', venueRoute);
 app.use('/users', userRoute);
 app.use('/caterings', cateringRoute);
+app.use('/events', eventRoute);
+
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 
 app.get('/', (req, res) => res.send('Welcome to EventNa Management system API!'));
 
-db.sequelize.sync({ alter: true })
-  .then(() => {
-    console.log('Database synced');
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Failed to sync database:', err);
-  });
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+ 
