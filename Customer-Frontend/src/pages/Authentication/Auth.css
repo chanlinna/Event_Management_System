@@ -31,11 +31,16 @@
   font-weight: 500;
 }
 
+.form-group ::placeholder{
+  padding: 10px;
+  opacity: 80%;
+}
+
 .form-group input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 0.75rem 0;
+  border: 2px solid #5D8191;
+  border-radius: 12px;
   font-size: 1rem;
 }
 
@@ -56,11 +61,11 @@
 
 button[type="submit"] {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.75rem 0rem;
   background-color: #5D8191;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
