@@ -304,6 +304,7 @@
 import React from 'react';
 import EventBookingForm from '../../components/EventBookingForm/EventBookingForm';
 import NavBar from '../../components/NavBar/NavBar';
+import Footer from '../../components/Footer/Footer';
 
 const BookingPage = () => {
   return (
@@ -312,6 +313,7 @@ const BookingPage = () => {
       <div>
         <EventBookingForm />
       </div>
+      <Footer />
     </div>
   );
 };

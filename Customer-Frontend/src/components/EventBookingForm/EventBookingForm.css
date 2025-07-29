@@ -1,0 +1,67 @@
+.event-booking-container{
+    padding: 100px 0;
+    background-color: #f8f9fa;
+    margin-top: 50px;
+}
+
+.event-booking-wrapper{
+    padding: 0 400px;
+}
+
+.event-booking-wrapper .main-title{
+    font-size: 2.2rem;
+}
+
+.form-group label {
+    text-align: left;
+}
+
+.date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.startDate, .endDate {
+    width: 300px;
+}
+
+textarea {
+    width: 100%;
+    height: auto;
+    border: 2px solid #5D8191;
+    border-radius: 10px;
+}
+
+.form-group input {
+    padding-left: 10px;
+}
+
+.form-select {
+    width: 100%;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.choose-button {
+    background-color: #e9ecef;
+    color: black;
+    border: none;
+}
+
+.choose-button:hover{
+    background-color: #2A3439;
+    color: white;
+    border: none;
+}
+
+.confirm-button:hover {
+    background-color: #2A3439 !important;
+    color: white;
+}
+
+
+

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { User, Edit } from "lucide-react";
 import NavBar from "../../components/NavBar/NavBar";
-import "./accountDetails.css"
+import "./accountDetails.css";
+import Footer from '../../components/Footer/Footer';
 
 const AccountDetails = () => {
   const [formData, setFormData] = useState({
@@ -110,7 +111,7 @@ const AccountDetails = () => {
         <h1 className="header-title">My Account</h1>
       </div>
 
-      <div className="main-content">
+      <div className="main-container">
         <h2 className="page-title">Account Details</h2>
 
         <div className="user-info-section">
