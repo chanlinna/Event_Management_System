@@ -70,6 +70,12 @@ const { Event, EventCatering, Customer, Venue, Catering, EventType, User } = db;
 export const createBooking = async (req, res) => {
   try {
     const {
+      // Customer info
+      firstName,
+      lastName,
+      organizationName,
+      phoneNumber,
+      // Event info
       name,
       startDate,
       endDate,
@@ -81,11 +87,31 @@ export const createBooking = async (req, res) => {
       budget,
     } = req.body;
 
+    // User ID from auth middleware (assume JWT verified)
     const userId = req.user.userId;
-    console.log("User ID from token:", userId);
-    const customer = await Customer.findOne({ where: { userId } });
-    if (!customer) return res.status(404).json({ error: "Customer not found" });
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
+    // Find or create customer for this user
+    let customer = await Customer.findOne({ where: { userId } });
+    if (!customer) {
+      customer = await Customer.create({
+        firstName,
+        lastName,
+        organizationName,
+        phoneNumber,
+        userId,
+      });
+    } else {
+      // Optionally update customer info on booking
+      await customer.update({
+        firstName,
+        lastName,
+        organizationName,
+        phoneNumber,
+      });
+    }
+
+    // Find associated venue, catering, eventType by their names
     const selectedVenue = await Venue.findOne({ where: { name: venue } });
     if (!selectedVenue) return res.status(404).json({ error: "Venue not found" });
 
@@ -95,6 +121,7 @@ export const createBooking = async (req, res) => {
     const selectedEventType = await EventType.findOne({ where: { name: eventType } });
     if (!selectedEventType) return res.status(404).json({ error: "Event type not found" });
 
+    // Create event booking with customer ID
     const newEvent = await Event.create({
       name,
       startDate,
@@ -106,23 +133,26 @@ export const createBooking = async (req, res) => {
       custId: customer.custId,
     });
 
+    // Create event catering association
     await EventCatering.create({
       eventId: newEvent.eventId,
       cateringId: selectedCatering.cateringId,
       num_of_set,
     });
 
-    res.status(201).json({
-      message: 'Booking successful',
+    return res.status(201).json({
+      message: "Booking successful",
       bookingId: newEvent.eventId,
     });
-
   } catch (err) {
     console.error("Error creating booking:", err);
-  if (err.errors) {
-    err.errors.forEach(e => console.error(e.message));
-  }
-  res.status(500).json({ error: "Something went wrong while booking.", details: err.message });
+    if (err.errors) {
+      err.errors.forEach((e) => console.error(e.message));
+    }
+    return res.status(500).json({
+      error: "Something went wrong while booking.",
+      details: err.message,
+    });
   }
 };
 
@@ -130,7 +160,7 @@ export const getUserBookings = async (req, res) => {
   try {
     const userId = req.user.userId; 
 
-    // Get all custIds linked to userId
+    // Find all customers linked to this user
     const customers = await Customer.findAll({
       where: { userId },
       attributes: ['custId'],
@@ -142,11 +172,19 @@ export const getUserBookings = async (req, res) => {
       return res.json([]); 
     }
 
-
+    // Fetch bookings with related info
     const bookings = await Event.findAll({
       where: { custId: custIds },
-      attributes: { exclude: ['imageUrl'] }, 
       order: [['startDate', 'DESC']],
+      include: [
+        { model: Venue, attributes: ['name'] },
+        { model: EventType, attributes: ['name'] },
+        { 
+          model: EventCatering,
+          attributes: ['num_of_set'],
+          include: [{ model: Catering, attributes: ['catering_set'] }]
+        }
+      ],
     });
 
     res.json(bookings);

@@ -86,6 +86,11 @@ export const getAllCaterings = async (req, res) => {
     let sortField = sortby;
     let sortOrder = 'ASC';
 
+    if (sortby.endsWith('Desc')) {
+        sortField = sortby.replace('Desc', '');
+        sortOrder = 'DESC';
+     }
+
 
     try {
         const catering = await db.Catering.findAll(
@@ -208,4 +213,119 @@ export const deleteCatering = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+/**
+ * @swagger
+ * /cateroings/search:
+ *   get:
+ *     summary: Search catering by Catering Set and Price
+ *     tags: [Caterings]
+ *     parameters:
+ *       - in: query
+ *         name: catering_set
+ *         schema: { type: string }
+ *         description: Partial match for catering.catering_set
+ *       - in: query
+ *         name: max_occupancy
+ *         schema: { type: integer }
+ *         description: Minimum required capacity
+ *       - in: query
+ *         name: price
+ *         schema: { type: number }
+ *         description: Maximum price per day
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer }
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer }
+ *         description: Items per page
+ *       - in: query
+ *         name: sortby
+ *         schema: { type: string }
+ *         description: Field to sort by (e.g., max_occupancy, max_occupancyDesc, price, priceDesc)
+ *     responses:
+ *       200:
+ *         description: Filtered venues
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Venue'
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     totalItems:
+ *                       type: integer
+ *                     currentPage:
+ *                       type: integer
+ *                     totalPages:
+ *                       type: integer
+ */
+export const searchVenues = async (req, res) => {
+  try {
+    const max_occupancy = req.query.max_occupancy ? parseInt(req.query.max_occupancy) : null;
+    const price = req.query.price ? parseFloat(req.query.price) : null;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const sortBy = req.query.sortby || 'max_occupancy';
+
+    if (req.query.max_occupancy && isNaN(max_occupancy)) {
+      return res.status(400).json({ error: 'Invalid max_occupancy parameter' });
+    }
+
+    const where = {};
+
+    if (req.query.location) {
+      where.location = {
+        [db.Sequelize.Op.like]: `%${req.query.location}%`
+      };
+    }
+
+    if (max_occupancy !== null) {
+      where.max_occupancy = {
+        [db.Sequelize.Op.lte]: max_occupancy
+      };
+    }
+
+    if (price !== null) {
+      where.price = {
+        [db.Sequelize.Op.lte]: price
+      };
+    }
+
+    let order = [['max_occupancy', 'ASC']];
+    if (sortBy.endsWith('Desc')) {
+      const field = sortBy.replace('Desc', '');
+      order = [[field, 'DESC']];
+    } else {
+      order = [[sortBy, 'ASC']];
+    }
+
+    const { count, rows } = await db.Venue.findAndCountAll({
+      where,
+      order,
+      limit,
+      offset: (page - 1) * limit,
+      attributes: ['venueId', 'name', 'location', 'max_occupancy', 'price', 'imageUrl']
+    });
+
+    res.json({
+      data: rows,
+      meta: {
+        totalItems: count,
+        currentPage: page,
+        totalPages: Math.ceil(count / limit)
+      }
+    });
+  } catch (err) {
+    console.error('Search error:', err);
+    res.status(500).json({ error: 'Venue search failed' });
+  }
 };

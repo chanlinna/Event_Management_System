@@ -2,6 +2,7 @@
 import React from 'react';
 import NavBar from '../../components/NavBar/NavBar'; 
 import EventsList from '../../components/EventsList/EventsList'; 
+import Footer from '../../components/Footer/Footer';
 import './EventPage.css';
 
 const EventPage = () => {
@@ -13,7 +14,7 @@ const EventPage = () => {
         {/* The EventsList component will display all events with pagination and sorting */}
         <EventsList isHomepage={false} /> 
       </main>
-
+      <Footer />
     </div>
   );
 };

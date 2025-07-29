@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
+import './MyBooking.css';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -41,12 +42,25 @@ const MyBookings = () => {
     <div>
       <NavBar />
       <h1>My Bookings</h1>
-      <ul>
-        {bookings.map((booking) => (
-          <li key={booking.eventId}>
-            <strong>{booking.name}</strong> — {new Date(booking.startDate).toLocaleDateString()} to {new Date(booking.end_date).toLocaleDateString()} — Budget: ${booking.budget}
-          </li>
-        ))}
+      <ul className="booking-list">
+        {bookings.map((booking) => {
+          const cateringInfo = booking.EventCaterings?.[0]; // assuming one catering per event
+          return (
+            <li key={booking.eventId} className="booking-item">
+              <strong>{booking.name}</strong>
+              <div>
+                <span>
+                  {new Date(booking.startDate).toLocaleDateString()} - {new Date(booking.end_date).toLocaleDateString()}
+                </span>
+              </div>
+              <div>Venue: {booking.Venue?.name || 'N/A'}</div>
+              <div>Event Type: {booking.EventType?.name || 'N/A'}</div>
+              <div>Catering: {cateringInfo?.Catering?.catering_set || 'N/A'}</div>
+              <div>Number of Sets: {cateringInfo?.num_of_set || 0}</div>
+              <div>Description: {booking.desc || 'No description'}</div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

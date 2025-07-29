@@ -8,6 +8,7 @@ const EventBookingForm = () => {
 
   const [formData, setFormData] = useState(
     location.state?.formData || {
+      // Event info
       name: "",
       startDate: "",
       endDate: "",
@@ -16,6 +17,11 @@ const EventBookingForm = () => {
       venue: "",
       catering: "",
       num_of_set: "",
+      // Customer info
+      firstName: "",
+      lastName: "",
+      organizationName: "",
+      phoneNumber: "",
     }
   );
 
@@ -56,6 +62,7 @@ const EventBookingForm = () => {
       });
     }
   }, [location.state?.selectedCatering]);
+
   useEffect(() => {
     const venuePrice = location.state?.selectedVenue?.price || 0;
     const cateringUnitPrice = location.state?.selectedCatering?.price || 0;
@@ -84,6 +91,7 @@ const EventBookingForm = () => {
 
   const validateForm = () => {
     const newErrors = {};
+    // Event validations
     if (!formData.name) newErrors.name = "Event name is required";
     if (!formData.startDate) newErrors.startDate = "Start date is required";
     if (!formData.endDate) newErrors.endDate = "End date is required";
@@ -94,6 +102,12 @@ const EventBookingForm = () => {
     if (!formData.catering) newErrors.catering = "Catering is required";
     if (!formData.num_of_set || formData.num_of_set < 1)
       newErrors.num_of_set = "At least one catering set required";
+
+    // Customer validations
+    if (!formData.firstName) newErrors.firstName = "First name is required";
+    if (!formData.lastName) newErrors.lastName = "Last name is required";
+    // organizationName optional
+    if (!formData.phoneNumber) newErrors.phoneNumber = "Phone number is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -123,7 +137,7 @@ const EventBookingForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingData),
       });
@@ -140,6 +154,10 @@ const EventBookingForm = () => {
           venue: "",
           catering: "",
           num_of_set: "",
+          firstName: "",
+          lastName: "",
+          organizationName: "",
+          phoneNumber: "",
         });
         navigate(location.pathname, { replace: true, state: {} });
       } else if (response.status === 401) {
@@ -168,34 +186,114 @@ const EventBookingForm = () => {
           <div className="form-grid">
             <div>
 
+              {/* Customer Info */}
+              <h2>Customer Information</h2>
+              <div className="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+                {errors.firstName && <div className="error-message">{errors.firstName}</div>}
+              </div>
+
+              <div className="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+                {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+              </div>
+
+              <div className="form-group">
+                <label>Organization Name (optional)</label>
+                <input
+                  type="text"
+                  name="organizationName"
+                  value={formData.organizationName}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
+                {errors.phoneNumber && <div className="error-message">{errors.phoneNumber}</div>}
+              </div>
+
+              {/* Event Info */}
+              <h2>Event Information</h2>
               <div className="form-group">
                 <label>Event Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="form-input" />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
                 {errors.name && <div className="error-message">{errors.name}</div>}
               </div>
 
               <div className="date">
                 <div className="form-group startDate">
                   <label>Start Date</label>
-                  <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} className="form-input" />
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleInputChange}
+                    className="form-input"
+                  />
                   {errors.startDate && <div className="error-message">{errors.startDate}</div>}
                 </div>
 
                 <div className="form-group endDate">
                   <label>End Date</label>
-                  <input type="date" name="endDate" value={formData.endDate} onChange={handleInputChange} className="form-input" />
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleInputChange}
+                    className="form-input"
+                  />
                   {errors.endDate && <div className="error-message">{errors.endDate}</div>}
                 </div>
               </div>
 
               <div className="form-group">
                 <label>Description</label>
-                <textarea name="desc" value={formData.desc} onChange={handleInputChange} className="form-input" rows="3" />
+                <textarea
+                  name="desc"
+                  value={formData.desc}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  rows="3"
+                />
               </div>
 
               <div className="form-group">
                 <label>Event Type</label>
-                <select name="eventType" value={formData.eventType} onChange={handleInputChange} className="form-select">
+                <select
+                  name="eventType"
+                  value={formData.eventType}
+                  onChange={handleInputChange}
+                  className="form-select"
+                >
                   <option value="">Select type</option>
                   <option value="Conference">Conference</option>
                   <option value="Workshop">Workshop</option>
@@ -208,49 +306,85 @@ const EventBookingForm = () => {
 
               <div className="form-group">
                 <label>Choose Venue</label>
-                <button type="button" className="choose-button" onClick={() => handleNavigate("/venues")}>
+                <button
+                  type="button"
+                  className="choose-button"
+                  onClick={() => handleNavigate("/venues")}
+                >
                   Go to Venues
                 </button>
               </div>
 
               <div className="form-group">
-                <input type="text" name="venue" value={formData.venue} className="form-input" readOnly />
+                <input
+                  type="text"
+                  name="venue"
+                  value={formData.venue}
+                  className="form-input"
+                  readOnly
+                />
                 {errors.venue && <div className="error-message">{errors.venue}</div>}
               </div>
 
               <div className="form-group">
                 <label>Choose Catering</label>
-                <button type="button" className="choose-button" onClick={() => handleNavigate("/caterings")}>
+                <button
+                  type="button"
+                  className="choose-button"
+                  onClick={() => handleNavigate("/caterings")}
+                >
                   Go to Caterings
                 </button>
               </div>
 
               <div className="form-group">
-                <input type="text" name="catering" value={formData.catering} className="form-input" readOnly />
+                <input
+                  type="text"
+                  name="catering"
+                  value={formData.catering}
+                  className="form-input"
+                  readOnly
+                />
                 {errors.catering && <div className="error-message">{errors.catering}</div>}
               </div>
 
               <div className="form-group">
                 <label>Number of Catering Sets</label>
-                <input type="number" name="num_of_set" min="1" value={formData.num_of_set} onChange={handleInputChange} className="form-input" />
+                <input
+                  type="number"
+                  name="num_of_set"
+                  min="1"
+                  value={formData.num_of_set}
+                  onChange={handleInputChange}
+                  className="form-input"
+                />
                 {errors.num_of_set && <div className="error-message">{errors.num_of_set}</div>}
               </div>
             </div>
 
             <div>
-              {/*<h2 className="section-title">Summary</h2>
+              {/* Optional summary section */}
+              {/* <h2 className="section-title">Summary</h2>
               <div className="cost-summary">
                 <div className="cost-item"><span>Venue:</span><span>${pricing.venuePrice}</span></div>
                 <div className="cost-item"><span>Catering:</span><span>${pricing.cateringPrice}</span></div>
                 <div className="cost-total"><span>Total Budget:</span><span>${pricing.total}</span></div>
-              </div>*/}
+              </div> */}
 
-              <button type="submit" disabled={isSubmitting} className={`confirm-button ${isSubmitting ? "loading" : ""}`}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`confirm-button ${isSubmitting ? "loading" : ""}`}
+              >
                 {isSubmitting ? "Processing..." : "Confirm Booking"}
               </button>
 
               {submitMessage && (
-                <div className={submitMessage.includes("successfully") ? "success-message" : "error-message"}>
+                <div
+                  className={
+                    submitMessage.includes("successfully") ? "success-message" : "error-message"
+                  }
+                >
                   {submitMessage}
                 </div>
               )}

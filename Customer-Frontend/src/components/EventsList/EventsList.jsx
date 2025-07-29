@@ -1,9 +1,9 @@
 // Customer-Frontend/src/components/EventsList/EventsList.jsx
 import React, { useState, useEffect } from 'react';
-import { getEvents } from '../../api/eventService'; // Import eventService
-import EventCard from '../EventCard/EventCard';   // Import EventCard
-import Pagination from '../Pagination/Pagination'; // Assuming you have a Pagination component
-import './EventsList.css'; // Import the dedicated CSS for this list
+import { getEvents } from '../../api/eventService'; 
+import EventCard from '../EventCard/EventCard';  
+import Pagination from '../Pagination/Pagination'; 
+import './EventsList.css'; 
 
 const EventsList = ({ isHomepage = false }) => {
   const [events, setEvents] = useState([]);
@@ -11,7 +11,7 @@ const EventsList = ({ isHomepage = false }) => {
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: isHomepage ? 3 : 12, // Limit to 3 for homepage, 12 for full list
+    limit: isHomepage ? 3 : 3, 
     totalItems: 0,
     totalPages: 1
   });

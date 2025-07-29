@@ -55,8 +55,8 @@ const CateringsList = ({ isHomepage = false, formData = null }) => {
               value={sortBy} 
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="catering-set">Catering Set (A-Z)</option>
-              <option value="catering-set-Desc">Cateringset (Z-A)</option>
+              <option value="catering_set">Catering Set (A-Z)</option>
+              <option value="catering_setDesc">Cateringset (Z-A)</option>
               <option value="price">Price (Low to High)</option>
               <option value="priceDesc">Price (High to Low)</option>
             </select>

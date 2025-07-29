@@ -14,13 +14,14 @@
   display: flex; /* Use flexbox to align header content */
   flex-direction: column; /* Stack h2 and sort-options vertically */
   align-items: center; /* Center items horizontally */
+  margin-top: 50px;
 }
 
 .events-header h2 { /* Renamed from venues-header h2 */
   font-size: 2.2rem; /* Slightly larger heading for prominence */
   color: #2c3e50;
   margin-bottom: 1rem; /* Space between title and sort options */
-  font-weight: 600;
+  font-weight: bold;
 }
 
 /* Sort Options Styles */

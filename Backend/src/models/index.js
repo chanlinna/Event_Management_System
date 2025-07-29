@@ -97,6 +97,15 @@ db.Event.belongsToMany(db.Employee, {
 db.Event.hasMany(db.EventPayment, { foreignKey: 'eventId' });
 db.EventPayment.belongsTo(db.Event, { foreignKey: 'eventId' });
 
+// Event hasMany EventCatering
+db.Event.hasMany(db.EventCatering, { foreignKey: 'eventId' });
+db.EventCatering.belongsTo(db.Event, { foreignKey: 'eventId' });
+
+// EventCatering belongsTo Catering
+db.EventCatering.belongsTo(db.Catering, { foreignKey: 'cateringId' });
+db.Catering.hasMany(db.EventCatering, { foreignKey: 'cateringId' });
+
+
 // Sync only in development
 if (process.env.NODE_ENV === 'development') {
     await sequelize.sync({ alter: true });
