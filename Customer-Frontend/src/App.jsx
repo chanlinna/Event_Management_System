@@ -12,6 +12,8 @@ import AdminVenue from './pages/Admin/AdminVenue';
 import AdminCatering from './pages/Admin/AdminCatering';
 import EventPage from './pages/EventPage/EventPage';
 import AdminEvent from './pages/Admin/AdminEvent';
+import AccountDetails from './pages/AccountDetails/accountDetails';
+import BookingPage from './pages/BookingPage/BookingPage';
 import './App.css';
 
 function App() {
@@ -25,10 +27,13 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/venues" element={<VenuesPage />} />
             <Route path="/caterings" element={<CateringsPage />} />
+            <Route path="/events" element={<EventPage />} />
+            <Route path="/accounts" element={<AccountDetails />} />
+            <Route path="/booking" element={<BookingPage />} />
             <Route path="/admin" element={<AdminVenue />} />
             <Route path="/admin/catering" element={<AdminCatering />} />
-            <Route path="/events" element={<EventPage />} />
             <Route path="/admin/event" element={<AdminEvent />} />
+
           </Route>
 
           <Route element={<AuthLayout />}>

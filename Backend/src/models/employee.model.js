@@ -33,7 +33,6 @@ export default (sequelize, DataTypes) => sequelize.define('Employee', {
   },
   phone: {
     type: DataTypes.STRING(25),
-    unique: true,
     allowNull: false
   },
   roleId: {

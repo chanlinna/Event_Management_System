@@ -51,13 +51,21 @@ const NavBar = () => {
               Events
             </Link>
           </li>
-          {isLoggedIn && (
-            <li className="nav-item">
-              <Link to="/booking" className={`nav-link ${location.pathname === '/booking' ? 'active' : ''}`}>
-                Booking
-              </Link>
-            </li>
-          )}
+          <li className="nav-item">
+            <button
+              className={`nav-link nav-button ${location.pathname === '/booking' ? 'active' : ''}`}
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate('/booking');
+                } else {
+                  navigate('/login');
+                }
+              }}
+            >
+              Booking
+            </button>
+          </li>
+
         </ul>
 
         <div className="account-section">
@@ -74,7 +82,7 @@ const NavBar = () => {
               
               {isDropdownOpen && (
                 <div className="account-dropdown">
-                  <Link to="/profile" className="dropdown-item">Profile</Link>
+                  <Link to="/accounts" className="dropdown-item">Profile</Link>
                   <Link to="/bookings" className="dropdown-item">My Bookings</Link>
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item logout" onClick={handleLogout}>

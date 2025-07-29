@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getVenues } from '../../api/venueService';
+import { getVenues, searchVenues } from '../../api/venueService';
 import VenueCard from '../VenueCard/VenueCard';
 import Pagination from '../Pagination/Pagination';
 import './VenuesList.css';
 
-const VenuesList = ({ isHomepage = false }) => {
+const VenuesList = ({ isHomepage = false, searchFilters = null, formData = null }) => {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,12 +19,24 @@ const VenuesList = ({ isHomepage = false }) => {
   const fetchVenues = async () => {
     try {
       setLoading(true);
-      const data = await getVenues(pagination.page, pagination.limit, sortBy);
+      let data;
+      
+      if (searchFilters) {
+        data = await searchVenues({
+          ...searchFilters,
+          page: pagination.page,
+          limit: pagination.limit,
+          sortby: sortBy
+        });
+      } else {
+        data = await getVenues(pagination.page, pagination.limit, sortBy);
+      }
+
       setVenues(data.data);
       setPagination({
         ...pagination,
         totalItems: data.meta.totalItems,
-        totalPages: data.meta.totalPages
+        totalPages: Math.ceil(data.meta.totalItems / pagination.limit)
       });
     } catch (err) {
       setError(err.message);
@@ -35,7 +47,7 @@ const VenuesList = ({ isHomepage = false }) => {
 
   useEffect(() => {
     fetchVenues();
-  }, [pagination.page, sortBy]);
+  }, [pagination.page, sortBy, searchFilters]);
 
   const handlePageChange = (newPage) => {
     setPagination({ ...pagination, page: newPage });
@@ -48,7 +60,6 @@ const VenuesList = ({ isHomepage = false }) => {
     <div className="venues-list-container">
       {!isHomepage && (
         <div className="venues-header">
-          <h2>Our Venues</h2>
           <div className="sort-options">
             <label>Sort by:</label>
             <select 
@@ -67,12 +78,22 @@ const VenuesList = ({ isHomepage = false }) => {
       )}
 
       <div className="venues-grid">
-        {venues.map(venue => (
-          <VenueCard key={venue.venueId} venue={venue} />
-        ))}
+        {venues.length > 0 ? (
+          venues.map(venue => (
+            <VenueCard 
+              key={venue.id || venue.venueId} 
+              venue={venue} 
+              formData={formData}  // Pass formData to each VenueCard
+            />
+          ))
+        ) : (
+          <div className="no-results">
+            No venues found matching your search criteria
+          </div>
+        )}
       </div>
 
-      {!isHomepage && (
+      {!isHomepage && venues.length > 0 && (
         <Pagination
           currentPage={pagination.page}
           totalPages={pagination.totalPages}

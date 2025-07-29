@@ -4,7 +4,7 @@ import CateringCard from '../CateringCard/CateringCard';
 import Pagination from '../Pagination/Pagination';
 import './CateringsList.css';
 
-const CateringsList = ({ isHomepage = false }) => {
+const CateringsList = ({ isHomepage = false, formData = null }) => {
   const [caterings, setCaterings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,12 +65,22 @@ const CateringsList = ({ isHomepage = false }) => {
       )}
 
       <div className="caterings-grid">
-        {caterings.map(catering => (
-          <CateringCard key={catering.cateringId} catering={catering} />
-        ))}
+        {caterings.length > 0 ? (
+          caterings.map(catering => (
+            <CateringCard 
+              key={catering.cateringId} 
+              catering={catering} 
+              formData={formData}  // Pass formData to each CateringCard
+            />
+          ))
+        ) : (
+          <div className="no-results">
+            No caterings found
+          </div>
+        )}
       </div>
 
-      {!isHomepage && (
+      {!isHomepage && caterings.length > 0 && (
         <Pagination
           currentPage={pagination.page}
           totalPages={pagination.totalPages}
