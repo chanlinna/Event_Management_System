@@ -8,6 +8,10 @@
     margin: 0 auto;    
 }
 
+.venues-content{
+    margin-top: 50px;
+}
+
 /* Responsive adjustments for the wrapper */
 @media (max-width: 768px) {
     .venues-page-content-wrapper {

@@ -83,7 +83,7 @@ const NavBar = () => {
               {isDropdownOpen && (
                 <div className="account-dropdown">
                   <Link to="/accounts" className="dropdown-item">Profile</Link>
-                  <Link to="/bookings" className="dropdown-item">My Bookings</Link>
+                  <Link to="/mybooking" className="dropdown-item">My Bookings</Link>
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item logout" onClick={handleLogout}>
                     Logout

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import './EventBookingForm.css';
 
 const EventBookingForm = () => {
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ const EventBookingForm = () => {
   const [submitMessage, setSubmitMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   useEffect(() => {
     if (location.state?.selectedVenue) {
       const updatedFormData = {
@@ -38,7 +38,7 @@ const EventBookingForm = () => {
       setFormData(updatedFormData);
       navigate(location.pathname, {
         replace: true,
-        state: { formData: updatedFormData },
+        state: { ...location.state, formData: updatedFormData },
       });
     }
   }, [location.state?.selectedVenue]);
@@ -52,11 +52,24 @@ const EventBookingForm = () => {
       setFormData(updatedFormData);
       navigate(location.pathname, {
         replace: true,
-        state: { formData: updatedFormData },
+        state: { ...location.state, formData: updatedFormData },
       });
     }
   }, [location.state?.selectedCatering]);
+  useEffect(() => {
+    const venuePrice = location.state?.selectedVenue?.price || 0;
+    const cateringUnitPrice = location.state?.selectedCatering?.price || 0;
+    const numOfSets = parseInt(formData.num_of_set) || 0;
 
+    const cateringPrice = cateringUnitPrice * numOfSets;
+    const total = venuePrice + cateringPrice;
+
+    setPricing({
+      venuePrice,
+      cateringPrice,
+      total,
+    });
+  }, [location.state?.selectedVenue, location.state?.selectedCatering, formData.num_of_set]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -74,7 +87,7 @@ const EventBookingForm = () => {
     if (!formData.name) newErrors.name = "Event name is required";
     if (!formData.startDate) newErrors.startDate = "Start date is required";
     if (!formData.endDate) newErrors.endDate = "End date is required";
-    else if (formData.endDate <= formData.startDate)
+    else if (formData.endDate < formData.startDate)
       newErrors.endDate = "End date must be after start date";
     if (!formData.eventType) newErrors.eventType = "Event type is required";
     if (!formData.venue) newErrors.venue = "Venue is required";
@@ -90,7 +103,7 @@ const EventBookingForm = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
     if (!token) {
       setSubmitMessage("You must be logged in to make a booking.");
       return;
@@ -154,7 +167,6 @@ const EventBookingForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-grid">
             <div>
-              <h2 className="section-title">Event Info</h2>
 
               <div className="form-group">
                 <label>Event Name</label>
@@ -162,16 +174,18 @@ const EventBookingForm = () => {
                 {errors.name && <div className="error-message">{errors.name}</div>}
               </div>
 
-              <div className="form-group">
-                <label>Start Date</label>
-                <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} className="form-input" />
-                {errors.startDate && <div className="error-message">{errors.startDate}</div>}
-              </div>
+              <div className="date">
+                <div className="form-group startDate">
+                  <label>Start Date</label>
+                  <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} className="form-input" />
+                  {errors.startDate && <div className="error-message">{errors.startDate}</div>}
+                </div>
 
-              <div className="form-group">
-                <label>End Date</label>
-                <input type="date" name="endDate" value={formData.endDate} onChange={handleInputChange} className="form-input" />
-                {errors.endDate && <div className="error-message">{errors.endDate}</div>}
+                <div className="form-group endDate">
+                  <label>End Date</label>
+                  <input type="date" name="endDate" value={formData.endDate} onChange={handleInputChange} className="form-input" />
+                  {errors.endDate && <div className="error-message">{errors.endDate}</div>}
+                </div>
               </div>
 
               <div className="form-group">
@@ -200,7 +214,6 @@ const EventBookingForm = () => {
               </div>
 
               <div className="form-group">
-                <label>Selected Venue</label>
                 <input type="text" name="venue" value={formData.venue} className="form-input" readOnly />
                 {errors.venue && <div className="error-message">{errors.venue}</div>}
               </div>
@@ -213,7 +226,6 @@ const EventBookingForm = () => {
               </div>
 
               <div className="form-group">
-                <label>Selected Catering</label>
                 <input type="text" name="catering" value={formData.catering} className="form-input" readOnly />
                 {errors.catering && <div className="error-message">{errors.catering}</div>}
               </div>
@@ -226,12 +238,12 @@ const EventBookingForm = () => {
             </div>
 
             <div>
-              <h2 className="section-title">Summary</h2>
+              {/*<h2 className="section-title">Summary</h2>
               <div className="cost-summary">
                 <div className="cost-item"><span>Venue:</span><span>${pricing.venuePrice}</span></div>
                 <div className="cost-item"><span>Catering:</span><span>${pricing.cateringPrice}</span></div>
                 <div className="cost-total"><span>Total Budget:</span><span>${pricing.total}</span></div>
-              </div>
+              </div>*/}
 
               <button type="submit" disabled={isSubmitting} className={`confirm-button ${isSubmitting ? "loading" : ""}`}>
                 {isSubmitting ? "Processing..." : "Confirm Booking"}

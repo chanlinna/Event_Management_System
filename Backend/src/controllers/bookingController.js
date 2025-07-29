@@ -125,3 +125,33 @@ export const createBooking = async (req, res) => {
   res.status(500).json({ error: "Something went wrong while booking.", details: err.message });
   }
 };
+
+export const getUserBookings = async (req, res) => {
+  try {
+    const userId = req.user.userId; 
+
+    // Get all custIds linked to userId
+    const customers = await Customer.findAll({
+      where: { userId },
+      attributes: ['custId'],
+    });
+
+    const custIds = customers.map(c => c.custId);
+
+    if (custIds.length === 0) {
+      return res.json([]); 
+    }
+
+
+    const bookings = await Event.findAll({
+      where: { custId: custIds },
+      attributes: { exclude: ['imageUrl'] }, 
+      order: [['startDate', 'DESC']],
+    });
+
+    res.json(bookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

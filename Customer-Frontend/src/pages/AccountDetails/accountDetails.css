@@ -1,212 +1,99 @@
-/* .account-container {
-  min-height: 100vh;
-  background-color: #d9d9d9;
-  padding: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+
+.navbar {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin-bottom: 100px;
+}
+.account-container{
+  padding: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
 }
 
-.header {
+.header{
+  padding-left:50px;
+  padding-right: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 64px;
+  justify-items: center;
+  font-size: 10px;
+  gap: 10px;
+  margin-top: -200px;
+  margin-bottom: 200px;
 }
 
-.user-icon {
-  width: 32px;
-  height: 32px;
-  color: #374151;
-}
-
-.header-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
+.main-container {
+  display: flex;
+  flex-direction: column;
   margin: 0;
+  padding: 0;
+  margin-top: -300px;
+  align-items: center;
+  width: 100%;
 }
 
-.main-content {
-  max-width: 672px;
-  margin: 0 auto;
-}
-
-.page-title {
-  font-size: 48px;
-  font-weight: 700;
-  text-align: center;
-  color: #111827;
-  margin: 0 0 48px 0;
-}
-
-.user-info-section {
-  margin-bottom: 32px;
+/*.page-title {
+  font-size: 32px;
+  text-align: left;
+  margin-left: -260px;
 }
 
 .section-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
-  margin: 0 0 32px 0;
+  font-size: 20px;
+  text-align: left;
 }
 
-.user-form {
+.user-info-section{
+  margin: 0 200px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
+  align-items: left;
+  align-content: center;
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 16px 24px;
-  font-size: 18px;
-  border: 1px solid #d1d5db;
-  border-radius: 16px;
-  background-color: #ffffff;
-  color: #111827;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-}
-
-.form-input::placeholder {
-  color: #6b7280;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.form-input.error {
-  border-color: #ef4444;
-}
-
-.form-input.disabled {
-  background-color: #f9fafb;
-  color: #6b7280;
-  cursor: not-allowed;
 }
 
 .email-input-container {
-  position: relative;
   display: flex;
-  align-items: center;
+  width: 100%;
 }
 
-.email-input {
-  padding-right: 64px;
+.form-group {
+  width: 500px;
 }
 
-.edit-button {
-  position: absolute;
-  right: 16px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.edit-button:hover {
-  background-color: #f3f4f6;
-}
-
-.edit-icon {
-  width: 20px;
-  height: 20px;
-  color: #6b7280;
-}
-
-
-.error-message {
-  color: #ef4444;
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-
-.button-container {
+form{
   display: flex;
-  justify-content: flex-end;
-  margin-top: 48px;
-}
-
-.submit-button {
-  padding: 12px 32px;
-  background-color: #64748b;
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 16px;
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.submit-button:hover:not(:disabled) {
-  background-color: #475569;
-}
-
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.loading-container {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 48px;
-  color: #6b7280;
-  font-size: 16px;
 }
 
-
-@media (max-width: 768px) {
-  .account-container {
-    padding: 16px;
-  }
-
-  .page-title {
-    font-size: 36px;
-    margin-bottom: 32px;
-  }
-
-  .header {
-    margin-bottom: 48px;
-  }
-
-  .form-input {
-    font-size: 16px;
-    padding: 14px 20px;
-  }
-
-  .email-input {
-    padding-right: 56px;
-  }
-
-  .button-container {
-    margin-top: 32px;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-title {
-    font-size: 28px;
-  }
-
-  .section-title {
-    font-size: 20px;
-  }
-
-  .header-title {
-    font-size: 20px;
-  }
+.button-container{
+  width: 150px;
 } */
+
+.email-input-container {
+  display: flex;
+  width: 100%;
+}
+
+.button-container{
+  width: 150px;
+  justify-self: center;
+}
+
+.user-info-section{
+  margin: 0 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  align-content: center;
+  width: 500px;
+
+}
