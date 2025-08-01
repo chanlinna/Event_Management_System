@@ -6,7 +6,6 @@ import db from '../models/index.js';
 const router = express.Router();
 
 router.post('/', upload.single('image') , createCatering);
-
 router.get('/', getAllCaterings);
 router.get('/:id', getCateringById);
 router.put('/:id', updateCatering);
