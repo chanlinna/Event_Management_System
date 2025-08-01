@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
 import VenuesList from '../../components/VenuesList/VenuesList';
-import SearchFilters from '../../components/SearchFilters/SearchFilters';
+import SearchFilters from '../../components/SearchFilters.css/SearchFilters';
 import Footer from '../../components/Footer/Footer';
 import './VenuesPage.css';
 

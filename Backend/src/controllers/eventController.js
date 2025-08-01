@@ -193,29 +193,28 @@ export const getEvents = async (req, res) => {
 
 
     const { count, rows: events } = await Event.findAndCountAll({
-      where, // Apply filters here
+      where, 
       limit,
       offset,
-      order, // Apply sorting here
-      attributes: { exclude: [] }, // Make sure imageUrl is not excluded
-      include: [ // Define which associated models to include (JOIN)
+      order, 
+      attributes: { exclude: [] }, 
+      include: [ 
         {
-          model: EventType, // Includes EventType details
-          attributes: ['name'] // Only get the 'name' attribute from EventType
+          model: EventType, 
+          attributes: ['name'] 
         },
         {
-          model: Venue, // Includes Venue details (ASSUMED Venue model exists)
-          attributes: ['name', 'location', 'max_occupancy'] // Example attributes
+          model: Venue, 
+          attributes: ['name', 'location', 'max_occupancy']
         },
         {
-          model: Customer, // Includes Customer details (ASSUMED Customer model exists)
-          // THIS IS THE LINE TO CHANGE:
+          model: Customer, 
           attributes: ['custId', 'firstName', 'lastName'] 
         },
         {
-          model: Catering, // Includes Catering details through EventCatering join table
-          through: { attributes: ['num_of_set'] }, // Get num_of_set from the join table
-          attributes: ['catering_set', 'price'] // Example attributes from Catering model
+          model: Catering, 
+          through: { attributes: ['num_of_set'] }, 
+          attributes: ['catering_set', 'price'] 
         }
       ]
     });

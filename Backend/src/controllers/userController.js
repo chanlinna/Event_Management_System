@@ -107,7 +107,6 @@ export const login = async (req, res) => {
 
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).json({ error: 'Invalid credentials' });
-        // jwt.sign(payload,signature,option)
         console.log("User data before signing JWT:", user);
         const token = jwt.sign({ userId: user.userId, email: user.email }, process.env.JWT_SECRET, {
             expiresIn: '1d',
@@ -120,10 +119,7 @@ export const login = async (req, res) => {
     }
 };
 
-/**
- * GET /users/profile
- * Get user profile from token
- */
+
 export const getUserProfile = async (req, res) => {
   const userId = req.user.userId;
 

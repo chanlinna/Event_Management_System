@@ -87,7 +87,7 @@ export const createBooking = async (req, res) => {
       budget,
     } = req.body;
 
-    // User ID from auth middleware (assume JWT verified)
+    // User ID from auth middleware 
     const userId = req.user.userId;
     if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
