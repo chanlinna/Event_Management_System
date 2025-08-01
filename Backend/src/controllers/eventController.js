@@ -1,20 +1,17 @@
-
-// backend/controllers/eventController.js
-
-import db from '../models/index.js'; // Import all models and Sequelize instance
+import db from '../models/index.js'; 
 const { Event, EventType, Venue, Customer, Catering, EventCatering, sequelize, Op } = db;
-import enums from '../models/enums.js'; // Import enums for validation
+import enums from '../models/enums.js';
 
 // Helper function for sorting based on query parameter
 const getOrderOptions = (sortBy) => {
   switch (sortBy) {
     case 'name': return [['name', 'ASC']];
     case 'nameDesc': return [['name', 'DESC']];
-    case 'startDate': return [['startDate', 'ASC']]; // Assuming 'startDate' is the field in your model
+    case 'startDate': return [['startDate', 'ASC']]; 
     case 'startDateDesc': return [['startDate', 'DESC']];
     case 'budget': return [['budget', 'ASC']];
     case 'budgetDesc': return [['budget', 'DESC']];
-    default: return [['startDate', 'ASC']]; // Default sort
+    default: return [['startDate', 'ASC']];
   }
 };
 

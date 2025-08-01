@@ -31,10 +31,9 @@
 // export default upload;
 
 
-// backend/middleware/uploadMiddleware.js
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs'; // For ensuring directory exists
+import fs from 'fs'; 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,22 +53,19 @@ const fileFilter = (req, file, cb) => {
   console.log('  File originalname:', file.originalname);
   console.log('  File mimetype:', file.mimetype);
 
-  // --- FIX IS HERE ---
-  // The regex should match the full MIME type strings
-  const allowedMimeTypes = /image\/jpeg|image\/jpg|image\/png|image\/gif/; // Corrected regex for MIME types
-  // You might also want to ensure the extension is one of these, but MIME type is more reliable
-  const allowedExtensions = /\.(jpeg|jpg|png|gif)$/i; // Regex to check file extension (case-insensitive)
+  const allowedMimeTypes = /image\/jpeg|image\/jpg|image\/png|image\/gif/; 
+  const allowedExtensions = /\.(jpeg|jpg|png|gif)$/i; 
 
   const extnameIsValid = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
   const mimetypeIsValid = allowedMimeTypes.test(file.mimetype);
 
   console.log('  Extname test result:', extnameIsValid);
-  console.log('  Mimetype test result:', mimetypeIsValid); // This should now be true for image/jpeg
+  console.log('  Mimetype test result:', mimetypeIsValid); 
 
-  if (extnameIsValid && mimetypeIsValid) { // Both conditions must be met
+  if (extnameIsValid && mimetypeIsValid) { 
     cb(null, true);
   } else {
-    cb(new Error('Only JPEG, JPG, PNG, GIF images are allowed!'), false); // More specific error message
+    cb(new Error('Only JPEG, JPG, PNG, GIF images are allowed!'), false); 
   }
 };
 

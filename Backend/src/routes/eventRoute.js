@@ -1,4 +1,3 @@
-// backend/routes/eventRoutes.js
 import express from 'express';
 const router = express.Router();
 import {
@@ -8,9 +7,6 @@ import {
 } from '../controllers/eventController.js'; 
 import upload from '../middlewares/upload.middleware.js'; 
 
-// Route for creating a new event
-// IMPORTANT: 'imageUrl' in upload.single('imageUrl') must match the 'name' attribute
-// of your <input type="file" name="imageUrl" /> in the frontend form.
 router.post('/', upload.single('imageUrl'), createEvent);
 
 // Route for getting all events

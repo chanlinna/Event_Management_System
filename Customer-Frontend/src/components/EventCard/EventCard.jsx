@@ -1,11 +1,10 @@
-// Customer-Frontend/src/components/EventCard/EventCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './EventCard.css'; // Import the CSS file
+import './EventCard.css';
 
 const EventCard = ({ event }) => {
   if (!event) {
-    return null; // Or render a loading/placeholder state
+    return null; 
   }
 
   // Helper function to format dates
@@ -23,13 +22,11 @@ const EventCard = ({ event }) => {
 
   return (
     <div className="event-card-container">
-      {/* Image Placeholder or Actual Image */}
       <div className="event-image-placeholder">
         {fullImageUrl ? (
           <img src={fullImageUrl} alt={event.name} className="event-actual-image" />
         ) : (
           <div className="placeholder-content">
-            {/* SVG placeholder for image */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -55,7 +52,7 @@ const EventCard = ({ event }) => {
 
         {/* Event Type */}
         <p className="event-type">
-          {event.EventType ? event.EventType.name : 'N/A'} {/* Assuming EventType is populated */}
+          {event.EventType ? event.EventType.name : 'N/A'} 
         </p>
 
         {/* Short Description */}
@@ -64,7 +61,6 @@ const EventCard = ({ event }) => {
         </p>
 
         {/* See More Button */}
-        {/* Adjust the 'to' prop based on your event detail page route */}
         <Link to={`/events/${event.eventId}`} className="see-more-btn">
           See More
         </Link>
