@@ -12,29 +12,8 @@ This project is a complete Event Management System designed to make it easy for 
 
 ## 🧾 Project Structure
 
-Event_Management_System/
-├── Backend/ 
-│ ├── src/
-│ │ ├── controllers/ 
-│ │ ├── middlewares/ 
-│ │ ├── models/
-│ │ ├── routes/ 
-│ │ ├── config/ 
-│ │ └── server.js 
-│ └── uploads/ 
-│
-├── Customer-Frontend/ 
-│ ├── public/ 
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├── api/ 
-│ │ ├── App.jsx 
-│ │ └── main.jsx 
-│
-├── .env
-├── package.json 
-└── README.md 
+<img width="297" height="561" alt="image" src="https://github.com/user-attachments/assets/b97976ab-8fbc-4677-8315-52fe7fa20eaf" />
+
 
 
 ## 🙋‍♂️ Who is it for?
